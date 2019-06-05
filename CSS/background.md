@@ -40,4 +40,5 @@
 当然这一切只是在只有background-position这一个属性的基础上，如果结合其他一些属性，比如background-size或者background-origin等，又会有怎样的变化呢。其实，以上这些属性或多或少只会导致图像的宽高发生变化，并不会影响background-position的计算方式
 
 [MDN](https://developer.mozilla.org/zh-CN/docs/Web/CSS/background-position)
+
 [参考](http://linxz.github.io/blog/css%E5%B1%9E%E6%80%A7%E5%9F%BA%E7%A1%80/2015/09/talk-about-background-position-values.html)
