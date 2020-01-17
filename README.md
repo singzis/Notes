@@ -2,7 +2,7 @@
 
 记录一些相关的知识点：
 
-+ 🐶Javascript
++ 🐶[Javascript](https://github.com/Singz72/Notes/tree/master/JavaScript)
 + 🐧CSS
 + 🐨React
 + 🦊webpack
