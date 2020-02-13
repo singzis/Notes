@@ -25,12 +25,13 @@ setState(prevState => prevState + 1)
 ```
 
 > 与 `class` 组件中的 `setState` 方法不同，`useState` 不会自动合并更新对象。可以用函数式的 `setState` 结合展开运算符来达到合并更新对象的效果
->
-> ```js
-> setState(prevState => {
->     return {...prevState, ...newState}
-> })
-> ```
+
+```js
+setState(prevState => {
+     return {...prevState, ...newState}
+})
+```
+
 
 ##### 惰性初始 state
 
