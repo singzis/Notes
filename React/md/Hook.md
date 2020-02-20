@@ -8,7 +8,7 @@ const [state, setState] = useState(initialState);
 
 在组件初始渲染时，会接收一个值 `initialState` 作为初始 `state`，可以组件内任意位置使用该 `state`
 
-`setState` 可以在后续用来更新`state`，通过接受一个值，作为新的 `state`，并触发一次新的渲染
+`setState` 可以在后续用来更新`state`，通过接受一个值，作为新的 `state`，*替换*原有的 `state`，并触发一次新的渲染
 
 ```js
 setState(newState)
@@ -24,7 +24,7 @@ setState(newState)
 setState(prevState => prevState + 1)
 ```
 
-> 与 `class` 组件中的 `setState` 方法不同，`useState` 不会自动合并更新对象。可以用函数式的 `setState` 结合展开运算符来达到合并更新对象的效果
+> 与 `class` 组件中的 `setState` 方法不同，`useState` 不会自动合并更新对象。可以用函数式的 `setState` 结合展开运算符来达到合并更新对象的效果，否则新返回的对象 `state` 可能会丢失某些属性
 
 ```js
 setState(prevState => {
