@@ -32,7 +32,6 @@ setState(prevState => {
 })
 ```
 
-
 ##### 惰性初始 state
 
 `initialState` 只会在初始渲染时有效，后续的渲染都会采用当前的最新值。如果初始值需要经过一系列计算，可以传入一个函数，并返回初始 `state`，而这个函数也只会在初次渲染时调用
@@ -69,7 +68,7 @@ useEffect(() => {
 
 `useEffect` 会保证在 `React` 任何新的渲染前执行完毕
 
-##### effest 的条件执行
+##### effect 的条件执行
 
 `useEffeft` 可以通过接收第二个参数，来约定 `effect` 什么时候会被重新创建
 
