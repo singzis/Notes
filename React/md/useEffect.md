@@ -2,12 +2,6 @@
 
 列一些在使用 useEffect 的时候，经常会遇见的一些问题，以及一些使用总结
 
-- [useEffect 中的 props 和 state](useEffect中的props和state)
-- [useEffect 的依赖](useEffect的依赖)
-- [useEffect 的清除](useEffect的清除)
-- [useEffect 中的数据请求](useEffect中的数据请求)
-- [useEffect 中的回调函数](useEffect中的回调函数)
-
 ## useEffect 中的 props 和 state
 
 props 或者 state 的更新会触发组件的重新渲染，
@@ -180,6 +174,9 @@ const latestCount = useRef(count);
 
 useEffect(() => {
   latestCount.current = count;
+}, [count]);
+
+useEffect(() => {
   const data = request("www.website.com/api=api", {
     success() {
       // 请求成功后执行,并打印最新的count
@@ -189,33 +186,38 @@ useEffect(() => {
 }, []);
 ```
 
-swiper 类似的写法
+swiper 类似的写法（获取 DOM，官方文档有介绍如何访问 DOM）
 
 ```js
 const [someNode, setSomeNode] = useState;
+const swiperNode = useRef(someNode);
 
 useEffect(() => {
   const mySwiper = new Swiper(".swiper-container", {
     // ...
     on: {
       slideChangeTransitionStart: () => {
-        console.log(someNode)
+        console.log(swiperNode.current);
       }
     }
   });
 }, []);
 
-return <>
-  <div className="swiper-container">...</div>
-  <div ref={someNode}>some node</div>
-</>
+return (
+  <>
+    <div className="swiper-container">...</div>
+    <div ref={swiperNode}>some node</div>
+  </>
+);
 ```
 
-useRef包裹的数据，就有点像class中this.state一样，每次对数据的修改，都是修改的state中的东西，不像捕获到的props和state，你没法保证在任意一个回调函数中latestCount.current的值是不变的，而且根据定义，可以随时修改它
+useRef 包裹的数据，就有点像 class 中 this.state 一样，每次对数据的修改，都是修改的 state 中的东西，不像捕获到的 props 和 state，你没法保证在任意一个回调函数中 latestCount.current 的值是不变的，而且根据定义，可以随时修改它
 
-这里也再次诠释了useState中一个要点，就是setCount的作用是替换原先的值，不管你是单独的一个数还是一个对象，而不是像this.setState一样，是靠合对象并来产生的新值，比如`{...oldState, ...newState}`
+这里也再次诠释了 useState 中一个要点，就是 setCount 的作用是替换原先的值，不管你是单独的一个数还是一个对象，而不是像 this.setState 一样，是靠合对象并来产生的新值，比如`{...oldState, ...newState}`，在视觉上，this.state 就像是 latestCount.current 的一个镜像，他们代表了同样的概念。ref 是一种“选择退出”渲染一致性的方法，在某些情况下会十分方便，通常情况下，应该避免在渲染期间读取或者设置 refs，因为它们是可变得，应该保持渲染的可预测性
 
 参考：
 
-- [useEffect 完整指南](https://overreacted.io/zh-hans/a-complete-guide-to-useeffect)
+- [A Complete Guide to useEffect](https://overreacted.io/a-complete-guide-to-useeffect/)
 - [How to fetch data with React Hooks?](https://www.robinwieruch.de/react-hooks-fetch-data)
+- [React hooks: get the current state, back to the future](https://dev.to/scastiel/react-hooks-get-the-current-state-back-to-the-future-3op2)
+- [How Are Function Components Different from Classes?](https://overreacted.io/how-are-function-components-different-from-classes/)

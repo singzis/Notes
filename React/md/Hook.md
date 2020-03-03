@@ -11,7 +11,7 @@ const [state, setState] = useState(initialState);
 `setState` 可以在后续用来更新`state`，通过接受一个值，作为新的 `state`，*替换*原有的 `state`，并触发一次新的渲染
 
 ```js
-setState(newState)
+setState(newState);
 ```
 
 > 在后续的重新渲染中，`useState` 返回的第一个值将始终是更新后最新的 `state`
@@ -21,15 +21,15 @@ setState(newState)
 在需要使用先前的 `state` 来计算新的 `state` 时，可以通过传递函数给 `setState`，该函数会接收先前的 `state`，并返回一个更新后的 `state`。
 
 ```js
-setState(prevState => prevState + 1)
+setState(prevState => prevState + 1);
 ```
 
 > 与 `class` 组件中的 `setState` 方法不同，`useState` 不会自动合并更新对象。可以用函数式的 `setState` 结合展开运算符来达到合并更新对象的效果，否则新返回的对象 `state` 可能会丢失某些属性
 
 ```js
 setState(prevState => {
-     return {...prevState, ...newState}
-})
+  return { ...prevState, ...newState };
+});
 ```
 
 ##### 惰性初始 state
@@ -38,23 +38,23 @@ setState(prevState => {
 
 ```js
 const [state, setState] = useState(() => {
-    const initialState = getSomethingFromProps(props)
-    return initialState
-})
+  const initialState = getSomethingFromProps(props);
+  return initialState;
+});
 ```
 
 #### useEffect
 
 ```js
 useEffect(() => {
-    effect
-    return () => {
-        cleanup
-    }
-}, [input])
+  effect;
+  return () => {
+    cleanup;
+  };
+}, [input]);
 ```
 
-接收一个一个包含命令式、且可能有副作用代码的函数，类似于class组件中的componentDidMount、componentWillUnmount和componentDidUpdate等生命周期函数
+接收一个一个包含命令式、且可能有副作用代码的函数，类似于 class 组件中的 componentDidMount、componentWillUnmount 和 componentDidUpdate 等生命周期函数
 
 默认情况下，`useEffect` 会在组件渲染结束后执行，也可以设置为仅在某些值改变后执行
 
@@ -79,12 +79,12 @@ useEffect(() => {
 #### useContext
 
 ```js
-const value = useContext(MyContext)
+const value = useContext(MyContext);
 ```
 
-接收一个context对象（`React.createContext`的返回值）并返回该context的当前值。当前的 context 值由上层组件中距离当前组件最近的 `<MyContext.Provider>` 的 value prop 决定
+接收一个 context 对象（`React.createContext`的返回值）并返回该 context 的当前值。当前的 context 值由上层组件中距离当前组件最近的 `<MyContext.Provider>` 的 value prop 决定
 
-但组件上层最近的 `<MyContext.Provider>` 更新时，该Hook会触发渲染，并使用最新传递给`MyContext` provider 的context value值
+但组件上层最近的 `<MyContext.Provider>` 更新时，该 Hook 会触发渲染，并使用最新传递给`MyContext` provider 的 context value 值
 
 > 如果你在接触 Hook 前已经对 context API 比较熟悉，那应该可以理解，`useContext(MyContext)` 相当于 class 组件中的 `static contextType = MyContext` 或者 `<MyContext.Consumer>`。
 > `useContext(MyContext)` 只是让你能够读取 context 的值以及订阅 context 的变化。你仍然需要在上层组件树中使用 `<MyContext.Provider>` 来为下层组件提供 context。
