@@ -214,3 +214,8 @@ return <>
 useRef包裹的数据，就有点像class中this.state一样，每次对数据的修改，都是修改的state中的东西，不像捕获到的props和state，你没法保证在任意一个回调函数中latestCount.current的值是不变的，而且根据定义，可以随时修改它
 
 这里也再次诠释了useState中一个要点，就是setCount的作用是替换原先的值，不管你是单独的一个数还是一个对象，而不是像this.setState一样，是靠合对象并来产生的新值，比如`{...oldState, ...newState}`
+
+参考：
+
+- [useEffect 完整指南](https://overreacted.io/zh-hans/a-complete-guide-to-useeffect)
+- [How to fetch data with React Hooks?](https://www.robinwieruch.de/react-hooks-fetch-data)
