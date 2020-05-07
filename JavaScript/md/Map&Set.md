@@ -132,8 +132,17 @@ const arr = new Array();
 map.set("a", 1);
 set.add(1);
 obj.a = 1;
-arr.push(1)
+arr.push(1);
 
 // 查询
-map.delete();
+map.has("a"); // true
+set.has(1); // true
+obj.hasOwnProperty("a"); // true
+arr.includes(1); // true
+
+// 删除
+map.delete("a"); // true
+set.delete(1); // true
+delete obj.a; // true
+arr.pop(); // 1
 ```
