@@ -25,7 +25,7 @@ cookie 由服务端提供，保存在浏览器，每次访问服务端时带上 
 - 无法跨域访问，cookie 绑定单一域名，仅在能相同域名下被使用，一级域名和二级域名可以共享 cookie
 - 时效性，可以设置过期时间（expires）或者有效时间（Max-Age），即使在浏览器关闭后再打开，cookie 也会被保留
 
-### 一些属性
+### 属性
 
 - expires:cookie 最长有效时间，形式为时间戳。如果未设置该属性，cookie 便会在浏览器关闭后失效。expires 设置的时间同客户端本地时间，即可以通过更改本地时间来使 cookie 存活/过期
 - Max-Age:cookie 失效前需要经过的秒数。为-1 或者 0 的时候 cookie 过期。和 expires 同时存在时，Max-Age 优先级更高
@@ -39,3 +39,32 @@ cookie 由服务端提供，保存在浏览器，每次访问服务端时带上 
 - 会话状态管理（保持用户登录状态、购物车等之类可以记录的数据）
 - 个性化设置（网站主题、用户自定义设置等）
 - 浏览器行为跟踪（分析用户行为等）
+
+## session
+
+### 描述
+
+session 是另一种记录服务器与客户端会话状态的机制。
+session 基于 cookie 实现，服务端存储 session，sessionID 存储在客户端中的 cookie 里，服务端解析并匹配请求中携带的 cookie 里的 sessionID，返回对应的数据。
+
+### 流程
+
+1.客户端首次访问服务器
+
+2.服务端创建该用户对应的 session 和 sessionID，并返回携带 sessionID 的 cookie
+
+3.客户端再次访问该服务器时，请求携带 cookie
+
+4.服务端解析 cookie 里的 sessionID，匹配对应用户，返回相应数据或作执行后续操作
+
+### 特点（与以 cookie 做会话状态做比较）
+
+- 比 cookie 安全，主要信息是存在服务端的
+- 值的类型不同，cookie 只能存储字符串在浏览器里，而 session 可以存储任意类型的值在服务端
+- 值的大小不同，cookie 是 4k 上限，而 session 能存更多的值，但是会消耗更多服务器资源
+- 时效性，cookie 可长可短，session 一般都很短（节省服务器开销）
+- session 靠 seesionID 与 cookie 做关联
+
+### 用处
+
+同 cookie
