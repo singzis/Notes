@@ -68,3 +68,5 @@ session 基于 cookie 实现，服务端存储 session，sessionID 存储在客�
 ### 用处
 
 同 cookie
+
+## token
