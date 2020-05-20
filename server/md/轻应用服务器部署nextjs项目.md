@@ -109,6 +109,14 @@ nginx -v # v1.16.1
 
 这里对 nginx 做默认的配置，把首页重定向到我们即将在 nextjs 里设置的地址`http://localhost:3000`
 
+进入文件：
+
+```shell
+vim ngins.conf
+```
+
+按`i`修改文件：
+
 ```conf
 # nginx.conf
 server {
@@ -119,6 +127,12 @@ server {
     }
     ...
 }
+```
+
+确认无误后，按`esc`输入命令`:wq`，保存并退出（vim 命令可以百度），然后重启 nginx
+
+```shell
+nginx -s reload
 ```
 
 其余的 nginx 设置可以参考[链接](https://mp.weixin.qq.com/s/JUOyAe1oEs-WwmEmsHRn8w)
@@ -199,3 +213,28 @@ node server.js
 ```
 
 然后你可以通过 ip 或者解析的域名来访问，成功显示页面内容则配置成功。
+
+到了这里就会存在一个问题，就是当我们退出远程链接服务器的窗口后，node 启动的项目就会关闭，这里就需要使用 pm2 来管理弄的项目
+
+### pm2
+
+[pm2](https://github.com/Unitech/pm2) 是一个带有负载均衡功能的 Node 应用的进程管理器
+
+pm2 常用命令
+
+```shell
+pm2 start example.js  //启动服务
+pm2 list //查看启动的应用
+pm2 show example.js //查看详细信息
+pm2 logs //查看当前信息
+pm2 stop example.js //停止example
+pm2 delete example.js //删除example
+```
+
+这里我们就可以通过 pm2 启动项目
+
+```shell
+pm2 start server.js
+```
+
+通过`pm2 logs`或者`pm2 list`可以查看项目启动情况，或者直接访问 ip 来查看
