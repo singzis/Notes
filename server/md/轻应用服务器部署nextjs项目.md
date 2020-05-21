@@ -45,13 +45,19 @@ export default function Layout(props) {
       </Head>
       <ul>
         <li>
-          <Link href="/">home</Link>
+          <Link href="/">
+            <a>home</a>
+          </Link>
         </li>
         <li>
-          <Link href="/about">about</Link>
+          <Link href="/about">
+            <a>about</a>
+          </Link>
         </li>
         <li>
-          <Link href="/other">other</Link>
+          <Link href="/other">
+            <a>other</a>
+          </Link>
         </li>
       </ul>
       <div>{props.children}</div>
