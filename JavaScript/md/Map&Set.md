@@ -140,6 +140,11 @@ set.has(1); // true
 obj.hasOwnProperty("a"); // true
 arr.includes(1); // true
 
+// 获取
+map.get("a"); // 1
+obj.a; // 1
+arr[0]; // 1
+
 // 删除
 map.delete("a"); // true
 set.delete(1); // true
