@@ -36,3 +36,12 @@ import router from "next/router";
 - `pathname`：当前路由地址，以`/pages`为根目录
 - `query`：一个查询对象
 - `asPath`：浏览器中显示的实际路径（包括查询）
+
+## 数据获取
+
+在静态渲染的情况下，依旧可以获取外部数据。
+
+我们`export`t 一个 page 时，也可以同时`export`一个`async`函数`getStaticProps`：
+
+- `getStaticProps`在打包时运行
+- 可以通过该函数获取数据，并且把它作为`props`返回
