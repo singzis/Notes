@@ -1,4 +1,4 @@
-# useEffect 使用不完全指南
+# useEffect 使用总结
 
 列一些在使用 useEffect 的时候，经常会遇见的一些问题，以及一些使用总结
 
@@ -159,7 +159,7 @@ useEffect(() => {
     success() {
       // 请求成功后执行,并打印最新的count
       console.log(count);
-    }
+    },
   });
 }, []);
 ```
@@ -181,7 +181,7 @@ useEffect(() => {
     success() {
       // 请求成功后执行,并打印最新的count
       console.log(latestCount.current);
-    }
+    },
   });
 }, []);
 ```
@@ -198,8 +198,8 @@ useEffect(() => {
     on: {
       slideChangeTransitionStart: () => {
         console.log(swiperNode.current);
-      }
-    }
+      },
+    },
   });
 }, []);
 
