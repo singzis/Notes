@@ -1,6 +1,4 @@
-# background
-
-## background-position
+# background-position知识总结
 
 > 为背景图片设置初始位置，由背景图片的原点相对于容器原点进行位置偏移
 

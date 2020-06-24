@@ -1,4 +1,4 @@
-# 阿里云轻应用服务器部署 nextjs 项目
+# 部署 nextjs 项目
 
 ## 描述
 
@@ -11,7 +11,7 @@ nextjs 是一个基于 react 服务端渲染的应用框架。
 - nextjs 官方 demo
   - nextjs v9.4.1
   - react v16.13.1
-- 轻应用服务器
+- 某云轻应用服务器
   - CentOS 7.3 64 位
   - node v14.2.0
   - nginx v1.16.1
