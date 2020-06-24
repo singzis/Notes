@@ -1,6 +1,8 @@
 # LEARN NOTE
 
-主要收集平时学习和工作中记录的知识点，其中一些会重新整理作为博客文章发布，欢迎浏览[博客首页](http://blog.zxingis.com)
+主要收集平时学习和工作中记录的知识点，其中一些会重新整理作为博客文章发布，欢迎浏览
+
+✨✨[singz72的博客](http://blog.zxingis.com)✨✨
 
 ## JavaScript
 
