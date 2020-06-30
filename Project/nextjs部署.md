@@ -132,7 +132,7 @@ nginx -t -c <配置路径>    # 检查配置是否有问题，如果已经在配
 进入文件：
 
 ```shell
-vim ngins.conf
+vim nginx.conf
 ```
 
 按`i`修改文件：
