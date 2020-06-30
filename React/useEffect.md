@@ -211,7 +211,7 @@ return (
 );
 ```
 
-useRef 包裹的数据，就有点像 class 中 this.state 一样，每次对数据的修改，都是修改的 state 中的东西，不像捕获到的 props 和 state，你没法保证在任意一个回调函数中 latestCount.current 的值是不变的，而且根据定义，可以随时修改它
+useRef 包裹的数据，就有点像 class组件 中 this.state 一样，每次对数据的修改，都是修改的 state 中的东西，不像捕获到的 props 和 state，你没法保证在任意一个回调函数中 latestCount.current 的值是不变的，因为useRef中的值，总是保持最新的，而且根据定义，可以随时修改它。
 
 这里也再次诠释了 useState 中一个要点，就是 setCount 的作用是替换原先的值，不管你是单独的一个数还是一个对象，而不是像 this.setState 一样，是靠合对象并来产生的新值，比如`{...oldState, ...newState}`，在视觉上，this.state 就像是 latestCount.current 的一个镜像，他们代表了同样的概念。ref 是一种“选择退出”渲染一致性的方法，在某些情况下会十分方便，通常情况下，应该避免在渲染期间读取或者设置 refs，因为它们是可变得，应该保持渲染的可预测性
 
