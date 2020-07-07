@@ -78,8 +78,7 @@
 响应首部字段，由服务器返回，开始状态管理所使用的 Cookie 信息。
 
 ```http
-Set-Cookie: cookiename=enable;expires=Tue, 07 Jul 2020 23:26:32 GMT;
-path=/;domain=.zxingis.com;Secure;HttpOnly;
+Set-Cookie: cookiename=enable;expires=Tue, 07 Jul 2020 23:26:32 GMT;path=/;domain=.zxingis.com;Secure;HttpOnly;
 ```
 
 | 属性名       | 说明                                                                                                                                                                                                                |
