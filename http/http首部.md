@@ -1,4 +1,4 @@
-# http/1.1 首部
+# http 首部
 
 ## 首部字段一览
 
@@ -6,70 +6,70 @@
 
 ### 通用首部字段
 
-| 首部字段名        | 说明                                              |
-| ----------------- | ------------------------------------------------- |
-| Warning           | 错误通知                                          |
-| Connection        | 逐跳首部、连接的管理                              |
-| Cache-Control     | 控制缓存行为，详见[Cache-Control](#cache-control) |
-| Transfer-Encoding | 指定报文主体的传输编码方式                        |
-| Trailer           | 报文末端的首部一览                                |
-| Pragma            | 报文指令                                          |
-| Upgrade           | 升级为其他协议                                    |
-| Date              | 创建报文的时间                                    |
-| Via               | 代理服务器的相关信息                              |
+| 首部字段名        | 说明                                                                                                                                                                   |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Warning           | 错误通知                                                                                                                                                               |
+| Connection        | 逐跳首部、连接的管理。HTTP/1.1 默认是持久连接的（Keep-Alive），如果服务器想断开连接，指定值为 Close 即可；如果后接首部字段，则表示该首部字段需要代理删除该字段后再转发 |
+| Cache-Control     | 控制缓存行为，详见[Cache-Control](#cache-control)                                                                                                                      |
+| Transfer-Encoding | 指定报文主体的传输编码方式                                                                                                                                             |
+| Trailer           | 报文末端的首部一览                                                                                                                                                     |
+| Pragma            | 报文指令                                                                                                                                                               |
+| Upgrade           | 升级为其他协议                                                                                                                                                         |
+| Date              | 创建报文的时间                                                                                                                                                         |
+| Via               | 代理服务器的相关信息，跟踪报文的转发情况                                                                                                                               |
 
 ### 请求首部字段
 
-| 首部字段名          | 说明                                                                    |
-| ------------------- | ----------------------------------------------------------------------- |
-| Accept              | 用户代理可处理的媒体类型，值的形式：type/subtype，详见[Accept](#accept) |
-| Accept-Charset      | 优先的字符集                                                            |
-| Accept-Encoding     | 优先的内容编码                                                          |
-| Accept-Language     | 优先的语言（自然语言）                                                  |
-| Authorization       | Web 认证信息                                                            |
-| Except              | 期待服务器的特定行为                                                    |
-| From                | 用户的电子邮件地址                                                      |
-| Host                | 请求资源所在服务器                                                      |
-| If-Match            | 比较实体标记（ETag）                                                    |
-| If-Modified-Since   | 比较资源的更新时间                                                      |
-| If-None-Match       | 比较实体标记（与 If-Match 相反）                                        |
-| If-Range            | 资源未更新时发送实体 Byte 的范围请求                                    |
-| If-Unmodified-Since | 比较资源的更新时间（与 If-Modified-Since 相反）                         |
-| Max-Forwards        | 最大传输逐跳数                                                          |
-| Proxy-Authorization | 代理服务器要求客户端的认证信息                                          |
-| Range               | 实体的字节范围请求                                                      |
-| Referer             | 对请求中 URI 的原始获取方                                               |
-| TE                  | 传输编码的优先级                                                        |
-| User-Agent          | HTTP 客户端程序的信息                                                   |
+| 首部字段名          | 说明                                                                                                                                                                                 |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Accept              | 用户代理可处理的媒体类型，值的形式：type/subtype，详见[Accept](#accept)                                                                                                              |
+| Accept-Charset      | 优先的字符集                                                                                                                                                                         |
+| Accept-Encoding     | 优先的内容编码                                                                                                                                                                       |
+| Accept-Language     | 优先的语言（自然语言）                                                                                                                                                               |
+| Authorization       | Web 认证信息                                                                                                                                                                         |
+| Except              | 期待服务器的特定行为                                                                                                                                                                 |
+| From                | 用户的电子邮件地址                                                                                                                                                                   |
+| Host                | 请求资源所在服务器，HTTP/1.1 下必需值。在单主机多域名的情况下可以明确知道是应用于哪个域名                                                                                            |
+| If-Match            | 比较实体标记（ETag），如果字段值与 ETag 的值匹配则执行请求，否则返回 412 Precondition Failed；如果值为星号（\*），则忽略比较                                                         |
+| If-Modified-Since   | 比较资源的更新时间。如果服务器资源在指定时间之后有更新过资源，那么接受请求并返回新资源，否则拒绝请求，返回 304 Not ModiFied，命中缓存                                                |
+| If-None-Match       | 比较实体标记（与 If-Match 相反），如果字段值与 ETag 值不匹配，则执行请求，返回新资源                                                                                                 |
+| If-Range            | 资源未更新时发送实体 Byte 的范围请求。通过比较字段值（ETag 值或者时间）与请求资源的 ETag 值或者时间是否一致，成功匹配则做范围请求返回（范围有 Range 首部字段指明），否则返回全部资源 |
+| If-Unmodified-Since | 比较资源的更新时间（与 If-Modified-Since 相反）                                                                                                                                      |
+| Max-Forwards        | 最大传输逐跳数                                                                                                                                                                       |
+| Proxy-Authorization | 代理服务器要求客户端的认证信息                                                                                                                                                       |
+| Range               | 实体的字节范围请求                                                                                                                                                                   |
+| Referer             | 对请求中 URI 的原始获取方                                                                                                                                                            |
+| TE                  | 传输编码的优先级                                                                                                                                                                     |
+| User-Agent          | HTTP 客户端程序的信息                                                                                                                                                                |
 
 ### 响应首部字段
 
-| 首部字段名         | 说明                         |
-| ------------------ | ---------------------------- |
-| Accept-Range       | 是否接受字节范围请求         |
-| Age                | 推算资源创建时间             |
-| ETag               | 资源的匹配信息               |
-| Location           | 令客户端重定向至指定 URI     |
-| Proxy-Authenticate | 代理服务器对客户端的认证信息 |
-| Retry-After        | 对再次发送请求的时机要求     |
-| Server             | HTTP 的服务器安装信息        |
-| Vary               | 代理服务器缓存的管理信息     |
-| WWW-Authenticate   | 服务器对客户端的认证信息     |
+| 首部字段名         | 说明                                                                                                                                                                                                                                                       |
+| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Accept-Range       | 是否接受字节范围请求                                                                                                                                                                                                                                       |
+| Age                | 推算资源创建时间                                                                                                                                                                                                                                           |
+| ETag               | 资源的匹配信息，服务器对资源以字符串形式作唯一标示，资源更新时，ETag 值也会更新。存在强 ETag 和弱 ETag：强 ETag 是资源只要发生任意细微变动（比如删除再加上一个逗号），便会更新 ETag 值；弱 ETag 是需要资源发生本质改动导致前后存在差异时，才会更新 ETag 值 |
+| Location           | 令客户端重定向至指定 URI                                                                                                                                                                                                                                   |
+| Proxy-Authenticate | 代理服务器对客户端的认证信息                                                                                                                                                                                                                               |
+| Retry-After        | 对再次发送请求的时机要求                                                                                                                                                                                                                                   |
+| Server             | HTTP 的服务器安装信息                                                                                                                                                                                                                                      |
+| Vary               | 代理服务器缓存的管理信息                                                                                                                                                                                                                                   |
+| WWW-Authenticate   | 服务器对客户端的认证信息                                                                                                                                                                                                                                   |
 
 ### 实体首部字段
 
-| 首部字段名       | 说明                                                                         |
-| ---------------- | ---------------------------------------------------------------------------- |
-| Allow            | 资源可支持的 HTTP 方法                                                       |
-| Content-Encoding | 实体主体适用的编码方式                                                       |
-| Content-Language | 实体主体的自然语言                                                           |
-| Content-Length   | 实体主体的字节大小                                                           |
-| Content-Location | 替代对应资源的 URI                                                           |
-| Content-MD5      | 实体主体的报文摘要                                                           |
-| Content-Range    | 实体主体的位置范围                                                           |
-| Content-Type     | 实体主体的媒体类型，同 Accept，值的形式：type/subtype，详见[Accept](#accept) |
-| Expires          | 实体主体过期的时间                                                           |
-| Last-Modified    | 资源最后修改时间                                                             |
+| 首部字段名       | 说明                                                                                                                                   |
+| ---------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| Allow            | 资源可支持的 HTTP 方法                                                                                                                 |
+| Content-Encoding | 实体主体适用的编码方式                                                                                                                 |
+| Content-Language | 实体主体的自然语言                                                                                                                     |
+| Content-Length   | 实体主体的字节大小                                                                                                                     |
+| Content-Location | 替代对应资源的 URI                                                                                                                     |
+| Content-MD5      | 实体主体的报文摘要                                                                                                                     |
+| Content-Range    | 实体主体的位置范围                                                                                                                     |
+| Content-Type     | 实体主体的媒体类型，同 Accept，值的形式：type/subtype，详见[Accept](#accept)                                                           |
+| Expires          | 实体主体过期的时间，在时间之前会命中缓存，之后则需要向源服务器确认资源的有效性。时间同客户端或者缓存服务器本地时间，即可以手动更改时间 |
+| Last-Modified    | 资源最后修改时间                                                                                                                       |
 
 ### 为 cookie 服务的首部字段
 
@@ -137,3 +137,21 @@ Cache-Control: private, max-age=0, no-cache
 | cache-extension  | -      | 新指令标记（token）                                                                                                                                                            |
 
 #### Accept
+
+通知服务器，客户端可处理的媒体类型的想对优先级，采用 type/subtype 形式：
+
+- 文本文件：
+  - text/html,text/plain,text/css
+  - application/xhtml+xml,application/xml
+- 图片文件：
+  - image/jpeg,image/gif,image/png
+- 视频文件：
+  - video/mpeg,video/quicktime
+- 应用程序使用的二进制文件
+  - application/octet-stream,application/zip
+
+可以通过传入`q=`的形式来给类型赋予权重，用分号分隔，q 的值默认范围是 0 ～ 1（可精确到小数点后 3 位），1 最大；如不指定 q 的值，则默认权重为 1。
+
+```http
+Accept: text/html,application/xhtml+xml;q=0.9,application/xml;q=0.8
+```
