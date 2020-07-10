@@ -13,6 +13,7 @@
 - [javascript 复制内容到贴板](https://github.com/Singz72/Notes/blob/master/JavaScript/javascript%E5%A4%8D%E5%88%B6%E5%86%85%E5%AE%B9%E5%88%B0%E8%B4%B4%E6%9D%BF.md)
 - [面试常考函数](https://github.com/Singz72/Notes/blob/master/JavaScript/%E9%9D%A2%E8%AF%95%E5%B8%B8%E8%80%83%E5%87%BD%E6%95%B0.md)
 - [cookie 和它的小伙伴们](http://blog.zxingis.com)
+- [跨站脚本攻击](https://github.com/Singz72/Notes/blob/master/JavaScript/%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB.md)
 
 ## CSS
 
