@@ -26,7 +26,7 @@
 - [Hook 总结](https://github.com/Singz72/Notes/blob/master/React/Hook.md)
 - [useEffect 总结](https://github.com/Singz72/Notes/blob/master/React/useEffect.md)
 
-## Http
+## HTTP
 
 - [http 协议](https://github.com/Singz72/Notes/blob/master/http/http%E5%8D%8F%E8%AE%AE.md)
 - [http 状态码](https://github.com/Singz72/Notes/blob/master/http/http%E7%8A%B6%E6%80%81%E7%A0%81.md)
@@ -38,6 +38,6 @@
 - [nextjs 部署](https://github.com/Singz72/Notes/blob/master/Project/nextjs%E9%83%A8%E7%BD%B2.md)
 - [nextjs 使用指南](https://github.com/Singz72/Notes/blob/master/Project/nextjs%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97.md)
 
-## webpack
+## Webpack
 
 - [webpack 基础](https://github.com/Singz72/Notes/blob/master/webpack/webpack%E5%9F%BA%E7%A1%80.md)
