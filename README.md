@@ -41,3 +41,4 @@
 ## Webpack
 
 - [webpack 基础](https://github.com/Singz72/Notes/blob/master/webpack/webpack%E5%9F%BA%E7%A1%80.md)
+- [webpack 配置指南](https://github.com/Singz72/Notes/blob/master/webpack/webpack%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97.md)

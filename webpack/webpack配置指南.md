@@ -26,6 +26,10 @@ module.exports = {
 };
 ```
 
+## html 页面配置
+
+在使用`html-webpack-plugin`时，如果对导出的 html 重命名时有加入 hash 值，则需要对页面做映射（index.html->index.hash.html），不然即使是单页程序，访问也会出问题，因为默认访问的是`index.html`，但现在入口 html 名变成了`index.xxx.html`了。
+
 ## css 分离
 
 默认情况下，webpack 解析所有的 css 内容并写入 build 后的 js 文件中，然后会通过`style-loader`，将 css 内容添加到头部 style 标签中。所以如果原本项目就很大的话，js 和 css 揉杂在一起会让 js 文件变得很大，导致加载 js 文件时影响页面的渲染。
