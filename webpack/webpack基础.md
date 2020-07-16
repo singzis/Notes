@@ -146,7 +146,7 @@ module.exports = {
 
 ## 出口（output）
 
-通过 webpack 编译构建的项目的文件地址。通过该属性可以命名构建的文件名，默认为`./dist`，也可以通过其他属性来对构建文件做处理。
+通过 webpack 编译构建的项目的地址。通过该属性可以对其命名，默认为`./dist`，也可以通过其他属性来对构建文件做处理。
 
 ```js
 module.exports = {
@@ -157,7 +157,7 @@ module.exports = {
 };
 ```
 
-`path`则是指明文件输出的地址，这里指明在项目的`build`文件下，webpack 会自动生成这个文件夹。`filename`则指明了输出文件名，入口文件名为`index.js`，那么这里构建完成后则为`index.build.js`。其他的配置可以参考官方[output](https://www.webpackjs.com/configuration/output/)
+`path`则是指明文件输出的地址，这里指明在项目的`build`目录下，webpack 会自动生成这个目录。`filename`则指明了输出文件名，入口文件名为`index.js`，那么这里构建完成后则为`index.build.js`。其他的配置可以参考官方[output](https://www.webpackjs.com/configuration/output/)
 
 ## 总结
 
