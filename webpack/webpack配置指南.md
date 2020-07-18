@@ -92,6 +92,44 @@ publicPath: '../'
 
 这里就是写明 css 相对于静态资源的路径，也就是把原本 css 中缺失的一部分在 build 后的文件中补上。
 
-# 模块热替换
+## 模块热替换
 
-> 模块热替换（hot module replacement）功能会在应用程序运行过程中，替换、添加或删除模块，而无需重新加载整个页面。
+> 模块热替换（hot module replacement）功能会在应用程序运行过程中，替换、添加或删除模块，而无需重新加载整个页面。简称 HMR。
+
+HMR 带来的优点包括：
+
+1. 会保存页面加载时的应用程序的状态。举例来说就是当我们在页面上选中某个 checkBox 时，reload 会导致我们的选中丢失，但是 HMR 却只会更改需要响应的模块，不会导致我们的状态丢失
+2. 只更新我们变动的内容，不用手动刷新页面，可以节约很多开发时间
+3. 源码变动时，浏览器会立即更新内容
+
+**HMR 只适用于开发环境**
+
+关于 HMR 的配置，首先是需要启动 WDS 的，在`package.json`中修改脚本：
+
+```json
+{
+  "script": {
+    "dev": "webpack-dev-server"
+  }
+}
+```
+
+然后需要配置一下 webpack.config.js：
+
+```js
+module.exports = {
+  // plugins: [new webpack.HotModuleReplacementPlugin()],
+  devServer: {
+    // hot: true,
+    hotOnly: true,
+  },
+};
+```
+
+这里有几点需要注意：
+
+1. devServer 是作为`webpack-dev-server`的一个 options 配置的地方，所以我们在 devServer 中添加的属性`hotOnly:true`，也可以通过修改脚本命令达到一样的行为：`webpack-dev-server --hotOnly`
+2. hot 和 hotOnly 的区别是：前者在未开启 HMR 功能的模块更新内容后，页面会 reload，后者则不会，而是直接在控制台给出警告
+3. `HotModuleReplacementPlugin`是 webpack 提供的启动 HMR 的插件，在启用`hot:true`或者`hotOnly:true`的情况下，这个插件会自动被添加，所以可以不用手动添加，除非你有其他的配置需求
+
+关于 HMR 的实现原理：
