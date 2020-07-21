@@ -133,3 +133,29 @@ module.exports = {
 3. `HotModuleReplacementPlugin`是 webpack 提供的启动 HMR 的插件，在启用`hot:true`或者`hotOnly:true`的情况下，这个插件会自动被添加，所以可以不用手动添加，除非你有其他的配置需求
 
 关于 HMR 的实现原理：
+
+简单描述就是，在 devServer 创建成功时，服务端和浏览器之间会新建一个 webSocket 用于通信，而 webpack 对文件系统 watch，当存在内容变动，webpack 会对文件进行重新编译打包，然后保存到内存中，并且`webapck-dev-server`在监听编译打包事件，一旦编译打包成功，通过之前建立的 webSocket 把新包的 hash 值告知浏览器，浏览器获得新的 hash 后对服务端发起请求获取新包的内容，然后删除旧的模块和依赖，应用新的模块和依赖。
+
+但是当我们更改了模块后，浏览器端业务代码并不知道我们有做过更新，比如我们改了 pageA.js 的内容，我们就需要在 index.js 调用 HMR 的`accept`方法，添加模块处理后回调函数，即使应对处理：
+
+```js
+// index.js
+
+if (module && module.hot) {
+  module.hot.accept("./pageA.js", () => {
+    // to do something
+  });
+}
+```
+
+当然也可以不用针对某个文件，直接一把梭：
+
+```js
+// index.js
+
+if (module && module.hot) {
+  module.hot.accept();
+}
+```
+
+关于 HMR 原理的详细内容可以参考[Webpack HMR 原理解析](https://zhuanlan.zhihu.com/p/30669007)
