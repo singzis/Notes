@@ -104,7 +104,21 @@
 
 ### 描述
 
-> JSON Web Token，一种跨域解决方案
+> JSON Web Token，一种以 JSON 格式的 Token 实现方式，可用于跨域。
+
+JWT 分为三个部分，分别有`.`连接：
+
+1. Header：存放 Token 类型和加密的方法
+2. Payload：包含一些用户的信息
+3. Signature：签名，将前面的 header 和 paylaod 部分以及一个密钥使用 header 中的加密方法进行加密
+
+比如一个签名：
+
+```json
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+  .eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ
+  .MejVLl - m7KMfaay0nXxDWGEVPWsQ2f6SZnTvq4fXaLI
+```
 
 ### 流程
 
