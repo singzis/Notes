@@ -97,7 +97,7 @@ module.exports = {
 
 过程中`rules`指明了一些规则，每个规则需要通过`tset`属性指定的正则来进行匹配，当文件匹配成功，则进行对应的 loader 处理。use 可以接受一个字符串或者数组来说明要用到的 loader。
 
-用什么 loader 来处理，我们是通过`use`属性指明的，比如对于`.css`文件，我们则会对他进行兼容（postcss-loader）、解析`@import`和`require`引入的 css 内容（css-loader）和在`head`标签中添加`style`标签。在用 loader 处理文件的过程中，loader 的调用规则是从左到右，即 postcss-loader->css-laoder->style-loader。
+用什么 loader 来处理，我们是通过`use`属性指明的，比如对于`.css`文件，我们则会对他进行兼容（postcss-loader）、解析`@import`和`require`引入的 css 内容（css-loader）和在`head`标签中添加`style`标签。在用 loader 处理文件的过程中，loader 的调用规则是从右到左，即 postcss-loader->css-laoder->style-loader。
 
 在其中我们调用`postcss-loader`时，有通过`options`对这个 loader 进行一些规则处理，比如这里则是使用了`autoprefixer`插件，对一些 css 属性加浏览器前缀。
 
