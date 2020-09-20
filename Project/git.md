@@ -13,3 +13,5 @@
 `git diff`: 查看修改痕迹
 
 `git log`: 查看提交历史
+
+`git`
