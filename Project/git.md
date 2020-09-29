@@ -14,4 +14,4 @@
 
 `git log`: 查看提交历史
 
-`git r`
+`git reflog`: 查看命令历史
