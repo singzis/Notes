@@ -29,3 +29,5 @@
 `git merge name`: 合并 name 分支到当前分支
 
 `git branch -d name`: 删除 name 分支
+
+`git `
