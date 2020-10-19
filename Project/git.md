@@ -30,7 +30,7 @@
 
 `git branch -d name`: 删除 name 分支
 
-`git `
+`git push origin --delete name`: 删除远程 name 分支
 
 `git `
 
