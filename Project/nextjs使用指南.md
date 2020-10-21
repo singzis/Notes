@@ -31,7 +31,7 @@
 import router from "next/router";
 ```
 
-`router`对象游泳一些返回的对象定义：
+`router`对象也有一些返回的对象定义：
 
 - `pathname`：当前路由地址，以`/pages`为根目录
 - `query`：一个查询对象
@@ -41,7 +41,7 @@ import router from "next/router";
 
 在静态渲染的情况下，依旧可以获取外部数据。
 
-我们`export`t 一个 page 时，也可以同时`export`一个`async`函数`getStaticProps`：
+我们`export` 一个 page 时，也可以同时`export`一个`async`函数`getStaticProps`：
 
 - `getStaticProps`在打包时运行
 - 可以通过该函数获取数据，并且把它作为`props`返回

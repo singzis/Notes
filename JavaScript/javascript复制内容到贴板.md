@@ -38,7 +38,7 @@ function copy(content) {
 }
 ```
 
-然后就是把函数赋予需要点击触发的元素，比如**_react_**中：
+然后就是把函数赋予需要点击触发的元素，比如**react**中：
 
 ```jsx
 export default function CopyBtn({ content }) {
