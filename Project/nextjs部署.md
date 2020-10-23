@@ -33,7 +33,7 @@ nextjs 是一个基于 react 服务端渲染的应用框架。
 
 ```js
 // layout.jsx
-import import Head from "next/head";
+import Head from "next/head";
 import Link from "next/link";
 
 export default function Layout(props) {
