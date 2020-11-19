@@ -34,7 +34,7 @@
 
 `git`
 
-`git `
+`git  ·`
 
 ## git commit 规范
 
