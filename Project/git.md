@@ -34,8 +34,6 @@
 
 `git `
 
-`git  `
-
 ## git commit 规范
 
 其中 header 部分的 commit 说明：
