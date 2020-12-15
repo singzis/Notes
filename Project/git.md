@@ -32,7 +32,7 @@
 
 `git push origin --delete name`: 删除远程 name 分支
 
-`git `
+`git  `
 
 ## git commit 规范
 
