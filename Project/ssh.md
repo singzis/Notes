@@ -50,7 +50,7 @@ ssh -p port hostname
 |`-D`|指定本机的Socks监听端口，该端口收到的请求，都将转发到远程的SSH主机，又称动态端口转发|`ssh -D port hosename`|
 |`-f`|SSH链接在后台运行||
 |`-F`|指定使用的配置文件|`ssh -F /usr/local/ssh/other_config`|
-|`-h`，`--help`|帮助信息|`ssh -h`|
+|`-h`,`--help`|帮助信息|`ssh -h`|
 |`-i`|指定私钥，意为“identity_file”，默认值为`~/.ssh/id_dsa`。其中，对应的公钥必须存放在服务器|`ssh -i my-key hostname`|
 |`-l`|指定登陆名|`ssh -l username hostname`|
 |`-L`|设置本地端口转发。所有发向本地port端口的请求，都会经过hostname发往targetServer的80端口，相当于直接连上了targetServer的80端口|`ssh -L port:targetServer:80 username@hostname`|
@@ -61,15 +61,11 @@ ssh -p port hostname
 |`-R`|指定远程端口转发。命令需在跳板服务器执行，指定本地计算机local监听自己的port端口，所有发向这个端口的请求，都会转向 targetServer的902端口|`ssh -R port:targetServer:902 local`|
 |`-t`|在ssh直接运行远端命令时，提供一个互动时Shell|`ssh -t hosename emacs`|
 |`-v`|显示详细信息，可以重复多次，重复次数越多，信息越详细|`ssh -vvv hostname`|
-||||
-||||
-||||
-||||
-||||
-||||
-||||
-||||
-||||
+|`-X`|打开X窗口转发|`ssh -X hostname`|
+|`-1`|指定使用SSH1协议|`ssh -1 hostname`|
+|`-2`|指定使用SSH2协议|`ssh -2 hostname`|
+|`-4`|指定使用IPv4协议。默认值|`ssh -4 hostname`|
+|`-6`|指定使用IPv6协议|`ssh -6 hostname`|
 
 ## 参考
 
