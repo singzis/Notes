@@ -32,7 +32,8 @@
 
 `git push origin --delete name`: 删除远程 name 分支
 
-`git  `
+`git fetch origin`
+`git checkout -t origin/remote_branch_name`: 切换到远程 remote_branch_name 分支
 
 ## git commit 规范
 
