@@ -1,4 +1,6 @@
-# npm发包
+# npm包操作
+
+## npm发包
 
 前置：需要npm账号
 
@@ -10,3 +12,6 @@
   1. version中版号改为'x.x.x-beta'
   2. `npm run build`
   3. `npm publish --tag=beta`
+
+## npm删除包和版本
+
