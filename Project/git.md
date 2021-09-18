@@ -68,7 +68,7 @@
 
 强制推送
 
-`git push -f`
+`git push -f`（回到指定版本 再强推 有风险 须谨慎）
 
 [参考](https://blog.csdn.net/QH_JAVA/article/details/77979622)
 
@@ -100,7 +100,7 @@
 
 提交所有标签
 
-`git push origin --tag`
+`git push origin --tags`
 
 ### 状态
 
