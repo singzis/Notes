@@ -14,6 +14,14 @@
 
 `git remote add origin git@github.com:UserName/xxx.git`
 
+查看本地仓库的远程关联
+
+`git remote -v`
+
+删除本地仓库的远程关联
+
+`git remote rm name(远程关联在本地的名称)`
+
 克隆仓库
 
 `git clone https://github.com/xxx/xxx.git`
