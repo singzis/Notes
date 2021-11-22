@@ -76,7 +76,7 @@
 
 强制推送
 
-`git push -f`（回到指定版本 再强推 有风险 须谨慎）
+`git push -f origin 分支`（回到指定版本 再强推 有风险 须谨慎）
 
 [参考](https://blog.csdn.net/QH_JAVA/article/details/77979622)
 
