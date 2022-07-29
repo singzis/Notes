@@ -151,3 +151,63 @@ set.delete(1); // true
 delete obj.a; // true
 arr.pop(); // 1
 ```
+
+## Object/Map何为最佳实践
+
+- 当插入顺序是你解决问题时需要考虑的，并且当前需要使用除 String 和 Symbol 以外的键名时，那么 **「Map」** 就是个最佳解决方案
+- 如果需要遍历键值对（并且需要考虑顺序）,那我觉得还是需要优先考虑 **「Map」**。
+- **Map**是一个纯哈希结构，而**Object**不是（它拥有自己的内部逻辑）。**Map** 在频繁增删键值对的场景下表现更好，性能更高。因此当你需要频繁操作数据的时候也可以优先考虑 **Map**
+- 再举一个实际的例子，比如有一个自定义字段的用户操作功能，用户可以通过表单自定义字段，那么这时候最好是使用 Map，因为很有可能会破坏原有的对象
+
+```js
+const userCustomFields = {
+  'color':    'blue',
+  'size':     'medium',
+  'toString': 'A blue box' // 与原有方法重名
+};
+```
+
+此时用户自定义的 toString 就会破坏到原有的对象 而 「Map」 键名接受任何类型，没有影响
+
+```js
+function isMap(value) {
+  return value.toString() === '[object Map]';
+}
+
+const actorMap = new Map();
+
+actorMap.set('name', 'Harrison Ford');
+actorMap.set('toString', 'Actor: Harrison Ford');
+
+// Works!
+isMap(actorMap); // => true
+```
+
+- 当你需要处理一些属性，那么 **「Object」** 是完全受用的，尤其是需要处理 JSON 数据的时候。由于 **「Map」** 可以是任意类型，因此没有可以将其转化为 JSON 的原生方法。
+
+```js
+var map = new Map()
+map.set('key','value')
+JSON.stringify(map)  //"{}"
+```
+
+- 当你需要通正则表达式判断去处理一些业务逻辑时，**「Map」**将是你的最佳解决方案
+
+```js
+const actions = ()=>{
+  const functionA = ()=>{/*do sth*/}
+  const functionB = ()=>{/*do sth*/}
+  const functionC = ()=>{/*send log*/}
+  returnnewMap([
+    [/^guest_[1-4]$/,functionA],
+    [/^guest_5$/,functionB],
+    [/^guest_.*$/,functionC],
+    //...
+  ])
+}
+
+const onButtonClick = (identity,status)=>{
+  let action = [...actions()].filter(([key,value])=>(key.test(`${identity}_${status}`)))
+  action.forEach(([key,value])=>value.call(this))
+}
+```
