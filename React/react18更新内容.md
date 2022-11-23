@@ -1,5 +1,3 @@
-# React18更新内容
-
 Release：[tag v18.0.0](https://github.com/facebook/react/releases/tag/v18.0.0)
 
 ## 新API
