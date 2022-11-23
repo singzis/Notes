@@ -4,19 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "b2b67fc6d0a31747",
+        "id": "13e54d892b61f809",
         "type": "tabs",
         "children": [
           {
-            "id": "cdb368ce555c58d5",
+            "id": "a8e218d1380e960d",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "DS/哈希算法.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -85,7 +81,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "DS/哈希算法.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +97,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "DS/哈希算法.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -124,9 +118,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "DS/哈希算法.md"
-              }
+              "state": {}
             }
           }
         ]
@@ -136,17 +128,17 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "cdb368ce555c58d5",
+  "active": "a8e218d1380e960d",
   "lastOpenFiles": [
+    "DS/哈希算法.md",
+    "tool/zsh配置.md",
     "React/竞态条件.md",
     "DS/树.md",
-    "DS/哈希算法.md",
     "DS/堆.md",
     "React/抽离逻辑，纯净视图.md",
     "React/搭建环境.md",
     "React/Fiber.md",
     "React/forwardRef.md",
-    "React/hooks.md",
-    "React/Portal.md"
+    "React/hooks.md"
   ]
 }
