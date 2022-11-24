@@ -21,6 +21,7 @@ yarn.lock
 package-lock.json
 *bak
 .vscode
+.obsidian
 
 # visual studio code
 .history
