@@ -1,6 +1,8 @@
 [58-最后一个单词的长度](#58-最后一个单词的长度)
 [6-z字形变换](#6-z字形变换)
 [13-罗马数字转整数](#13-罗马数字转整数)
+[7-整数反转](# 7-整数反转)
+[8-字符串转换整数](#8-字符串转换整数)
 
 ## details
 
@@ -106,5 +108,70 @@ function romanToInt(s: string): number {
   }
   count += pre
   return count
+}
+```
+
+### 7-整数反转
+
+难度：中等
+
+[地址](https://leetcode.cn/problems/reverse-integer/)
+
+```ts
+// 思路，对数字取模
+// 有正负数关系，x变为0则跳出循环
+// 其他边界条件就是防止益处，提前判断是否会超出边界
+function reverse(x: number): number {
+    let res = 0
+    while (x !== 0) {
+        const temp = x % 10
+
+        if (res > 214748364 || (res === 214748364 && temp > 7)) {
+            return 0
+        }
+        if (res < -214748364 || (res === -214748364 && temp < -8)) {
+            return 0
+        }
+        
+        res = res * 10 + temp
+        x = Math.trunc(x / 10)
+    }
+    return res
+}
+```
+
+### 8-字符串转换整数
+
+难度：中等
+
+[地址](https://leetcode.cn/problems/string-to-integer-atoi/)
+
+```ts
+function myAtoi(s: string): number {
+  let str = s.trim()
+  let flag = 1
+  if (str[0] === '-') {
+    flag = -1
+    str = str.slice(1)
+  } else if (str[0] === '+') {
+    str = str.slice(1)
+  }
+  let res = 0
+  let i = 0
+  while (i <= str.length - 1) {
+    const temp = str[i]
+    if (temp === ' ' || isNaN(Number(temp))) {
+      return res * flag
+    }
+    res = res * 10 + Number(temp)
+    if (flag === 1 && res > Math.pow(2, 31) - 1) {
+      return Math.pow(2, 31) - 1
+    } else if (flag === -1 && res * flag < -Math.pow(2, 31)) {
+      return -Math.pow(2, 31)
+    }
+    i++
+  }
+
+  return res * flag
 }
 ```
