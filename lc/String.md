@@ -6,6 +6,7 @@
 [13-罗马数字转整数](#13-罗马数字转整数)
 [14-最长公共前缀](#14-最长公共前缀)
 [58-最后一个单词的长度](#58-最后一个单词的长度)
+[1750-删除字符串两端相同字符后的最短长度](#1750-删除字符串两端相同字符后的最短长度)
 [2027-转换字符串的最少操作次数](#2027-转换字符串的最少操作次数)
 
 ## details
@@ -270,6 +271,48 @@ function lengthOfLastWord(s: string): number {
 }
 ```
 
+### 1750-删除字符串两端相同字符后的最短长度
+
+难度：中等
+
+[地址](https://leetcode.cn/problems/minimum-length-of-string-after-deleting-similar-ends/)
+
+```ts
+function minimumLength(s: string): number {
+  let left = 0;
+  let right = s.length - 1;
+  while (s[left] === s[right] && left < right) {
+    left++;
+    while (s[left] === s[left - 1]) {
+      left++;
+    }
+    right--
+    while (s[right] === s[right + 1]) {
+      right--;
+    }
+  }
+  return Math.max(0,right - left + 1);
+};
+
+// 方法2，多了一个中间字符串做操作
+function minimumLength(s: string): number {
+    let str = s;
+  while (str[0] === str[str.length - 1] && str.length > 1) {
+    let start = 1;
+    let end = str.length - 2;
+    while (str[start] === str[0] && start < str.length - 1) {
+      start++;
+    }
+    while (str[end] === str[str.length - 1] && end > start) {
+      end--;
+    }
+    str = str.slice(start, end + 1);
+  }
+
+  return str.length;
+};
+```
+
 ### 2027-转换字符串的最少操作次数
 
 难度：简单
@@ -291,3 +334,4 @@ function minimumMoves(s: string): number {
     return count
 };
 ```
+

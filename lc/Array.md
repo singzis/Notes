@@ -1,4 +1,5 @@
-
+[11-盛最多水的容器](#11-盛最多水的容器)
+[2032-至少在两个数组中出现的值](#2032-至少在两个数组中出现的值)
 
 ## details
 
@@ -33,5 +34,48 @@ function maxArea(height: number[]): number {
   }
 
   return max
+}
+```
+
+### 2032-至少在两个数组中出现的值
+
+难度：简单
+
+[地址](https://leetcode.cn/problems/two-out-of-three/)
+
+```ts
+// 用三个数组中的值作为ans的下标
+// num1中的数，在ans指定位置上为1
+// num2中数，如果在ans对应下表处存在值为1，就将对应值改为-1，如果存在值为0，表示nums1中没有该值，则赋值为2，表示nums2中有这个值
+// 对于nums3，仅需要检验对应位置的值是否为1或者2，存在则改为-1
+function twoOutOfThree(
+  nums1: number[],
+  nums2: number[],
+  nums3: number[]
+): number[] {
+  const ans = new Array(101).fill(0)
+  const res: number[] = []
+
+  for (let x of nums1) {
+    ans[x] = 1
+  }
+
+  for (let y of nums2) {
+    if (ans[y] === 1) {
+      ans[y] = -1
+      res.push(y)
+    } else if (ans[y] === 0) {
+      ans[y] = 2
+    }
+  }
+
+  for (let z of nums3) {
+    if (ans[z] === 1 || ans[z] === 2) {
+      ans[z] = -1
+      res.push(z)
+    }
+  }
+
+  return res
 }
 ```
