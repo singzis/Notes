@@ -3,6 +3,7 @@
 [7-整数反转](# 7-整数反转)
 [8-字符串转换整数](#8-字符串转换整数)
 [10-正则表达式匹配](#10-正则表达式匹配)
+[12-罗马数字转整数](#12-罗马数字转整数)
 [13-罗马数字转整数](#13-罗马数字转整数)
 [14-最长公共前缀](#14-最长公共前缀)
 [58-最后一个单词的长度](#58-最后一个单词的长度)
@@ -165,6 +166,59 @@ function isMatch(s: string, p: string): boolean {
     }
   }
   return res[lenS - 1][lenP - 1]
+}
+```
+
+### 12-罗马数字转整数
+
+难度：中等
+
+[地址](https://leetcode.cn/problems/integer-to-roman/)
+
+```ts
+function intToRoman(num: number): string {
+    const common = {
+        1: 'I',
+        5: 'V',
+        10: 'X',
+        50: 'L',
+        100: 'C',
+        500: 'D',
+        1000: 'M',
+        4: 'IV',
+        9: 'IX',
+        40: 'XL',
+        90: 'XC',
+        400: 'CD',
+        900: 'CM',
+    };
+    if (common[num]) {
+        return common[num];
+    }
+
+    const str = num + '';
+    let res = '';
+    for (let i = 0; i < str.length; i++) {
+        const pow = Math.pow(10, str.length - i - 1);
+        let temp = Number(str[i]);
+        if (pow < 1000 && (temp === 4 || temp === 9 || temp === 5)) {
+            res = res + common[temp * pow];
+        } else if (temp < 5) {
+            // 1 2 3 4
+            while (temp > 0) {
+                res = res + common[pow];
+                temp--;
+            }
+        } else {
+            res = res + common[5 * pow];
+            // 6 7 8 9
+            while (temp > 5) {
+                res = res + common[pow];
+                temp--;
+            }
+        }
+    }
+    return res;
 }
 ```
 
