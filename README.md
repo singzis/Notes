@@ -2,8 +2,6 @@
 
 主要收集平时学习和工作中记录的知识点，其中一些会重新整理作为博客文章发布，欢迎浏览
 
-✨✨[singz72 的博客](http://blog.zxingis.com)✨✨
-
 ## JavaScript
 
 - [原型对象](https://github.com/Singz72/Notes/blob/master/JavaScript/%E5%8E%9F%E5%9E%8B%E5%AF%B9%E8%B1%A1.md)
