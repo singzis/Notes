@@ -1,8 +1,40 @@
-
+[19-删除链表倒数第N个节点](#19-删除链表倒数第N个节点)
 [21-合并两个有序链表](#21-合并两个有序链表)
 [剑18-删除链表节点](#剑18-删除链表节点)
 
 ## details
+
+### 19-删除链表倒数第N个节点
+
+难度：中等
+
+[地址](https://leetcode.cn/problems/remove-nth-node-from-end-of-list/)
+
+```ts
+function removeNthFromEnd(head: ListNode | null, n: number): ListNode | null {
+  if (head === null || n === 0) {
+    return head
+  }
+  const sentry = new ListNode(0)
+  sentry.next = head
+  let p1: ListNode | null = sentry.next
+  let p2: ListNode = p1
+  let count = 0
+  while (count !== n && p1 !== null) {
+    p1 = p1?.next
+    count++
+  }
+  if (p1 === null) {
+    return head.next
+  }
+  while (p1.next !== null) {
+    p1 = p1?.next
+    p2 = p2?.next as ListNode
+  }
+  p2.next = (p2?.next as ListNode).next
+  return sentry.next
+}
+```
 
 ### 21-合并两个有序链表
 
