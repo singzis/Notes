@@ -1,4 +1,5 @@
 [11-盛最多水的容器](#11-盛最多水的容器)
+[16-最接近的三数之和](#16-最接近的三数之和)
 [2032-至少在两个数组中出现的值](#2032-至少在两个数组中出现的值)
 
 ## details
@@ -34,6 +35,40 @@ function maxArea(height: number[]): number {
   }
 
   return max
+}
+```
+
+### 16-最接近的三数之和
+
+难度：中等
+
+[地址](https://leetcode.cn/problems/3sum-closest/)
+
+```ts
+// 双指针法
+function threeSumClosest(nums, target) {
+  nums.sort((a, b) => a - b) // 先将数组排序
+  let closestSum = Infinity // 用来记录最接近的和
+  for (let i = 0; i < nums.length-2; i++) {
+    let left = i + 1 // 初始化左指针
+    let right = nums.length - 1 // 初始化右指针
+    while (left < right) {
+      const sum = nums[i] + nums[left] + nums[right] // 计算三元组的和
+      if (Math.abs(target - sum) < Math.abs(target - closestSum)) {
+        // 如果更接近，则更新最接近的和
+        closestSum = sum
+      }
+      if (sum < target) {
+        left++ // 左指针右移
+      } else if (sum > target) {
+        right-- // 右指针左移
+      } else {
+        // 如果恰好等于目标值，直接返回
+        return sum
+      }
+    }
+  }
+  return closestSum
 }
 ```
 
