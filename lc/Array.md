@@ -1,5 +1,6 @@
 [11-盛最多水的容器](#11-盛最多水的容器)
 [16-最接近的三数之和](#16-最接近的三数之和)
+[17-电话号码的字母组合](#17-电话号码的字母组合)
 [2032-至少在两个数组中出现的值](#2032-至少在两个数组中出现的值)
 
 ## details
@@ -69,6 +70,82 @@ function threeSumClosest(nums, target) {
     }
   }
   return closestSum
+}
+```
+
+### 17-电话号码的字母组合
+
+难度：中等
+
+[url](https://leetcode.cn/problems/letter-combinations-of-a-phone-number/)
+
+```ts
+// 递归的思想，后一个字母需要与前面的所有组合再组合一次
+ function letterCombinations(digits: string): string[] {
+   if (digits === '') {
+     return []
+   }
+   const obj = {
+     2: 'abc',
+     3: 'def',
+     4: 'ghi',
+     5: 'jkl',
+     6: 'mno',
+     7: 'pqrs',
+     8: 'tuv',
+     9: 'wxyz',
+   }
+
+   function f(str: string, idx: number): string[] {
+     const cur = obj[str[idx]]
+     if (idx === 0) {
+       return cur.split('')
+     }
+     const r: string[] = []
+     const prev = f(str, idx - 1)
+     for (let i = 0; i < prev.length; i++) {
+       for (let j = 0; j < cur.length; j++) {
+         r.push(prev[i] + cur[j])
+       }
+     }
+     return r
+   }
+
+   return f(digits, digits.length - 1)
+ }
+ // 队列思想
+ // 23
+ // queue = [a,b,c]
+ // a出队 [b,c,ad,ae,af]
+ // b出队 [c,ad,ae,af,bd,be,bf]
+ // c出队 [ad,ae,af,bd,be,bf,cd,ce,cf]
+ function letterCombinations(digits: string): string[] {
+  if (digits === '') {
+    return []
+  }
+  const obj = {
+    2: 'abc',
+    3: 'def',
+    4: 'ghi',
+    5: 'jkl',
+    6: 'mno',
+    7: 'pqrs',
+    8: 'tuv',
+    9: 'wxyz',
+  }
+
+  const queue: string[] = obj[digits[0]].split('')
+  for (let i = 1; i < digits.length; i++) {
+    const queueLen = queue.length
+    const cur = obj[digits[i]].split('')
+    for (let _ = 0; _ < queueLen; _++) {
+      const temp = queue.pop()
+      for (let j = 0; j < cur.length; j++) {
+        queue.push(temp + cur[j])
+      }
+    }
+  }
+  return queue
 }
 ```
 
