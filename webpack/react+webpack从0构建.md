@@ -164,13 +164,13 @@ pnpm install webpack webpack-cli webpack-dev-server --save-dev
 ```js
 const path = require('path')
 const HTMLWebpackPlugin = require('html-webpack-plugin')
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 module.exports = {
   entry: './src/index.tsx',
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
+    clean: true
   },
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
@@ -199,7 +199,6 @@ module.exports = {
     ],
   },
   plugins: [
-    new CleanWebpackPlugin(),
     new HTMLWebpackPlugin({
       template: './src/index.html',
     }),
@@ -224,14 +223,14 @@ pnpm install ts-loader babel-loader style-loader css-loader file-loader --save-d
 -   style-loader：用于在浏览器中加载并应用 CSS 样式。
 -   file-loader：用于加载并处理文件，例如图片、字体等
 
-针对打包后的内容，需要安装两个插件
+针对打包后的内容，需要安装一个插件
 
 ```shell
-pnpm install html-webpack-plugin clean-webpack-plugin --save-dev
+pnpm install html-webpack-plugin --save-dev
 ```
 
 -   html-webpack-plugin：用于自动生成 HTML 文件，并将打包后的 JS 和 CSS 自动插入该 HTML 文件中。这样可以节省手动创建 HTML 文件并添加脚本和样式的步骤。
--   clean-webpack-plugin：用于清理构建目录中的旧文件。例如，在每次构建之前，可以使用此插件清理旧文件，以确保只保留最新的构建。这样可以避免旧文件留在构建目录中，从而避免混淆
+-   ~~clean-webpack-plugin：用于清理构建目录中的旧文件。例如，在每次构建之前，可以使用此插件清理旧文件，以确保只保留最新的构建。这样可以避免旧文件留在构建目录中，从而避免混淆~~clean-webpack-plugin的功能可以通过`output.clean:true`替代，前提是webpack的版本高于5.20
 
 7.在package.json增加相关命令启动和打包项目
 

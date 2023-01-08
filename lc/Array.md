@@ -1,6 +1,7 @@
 [11-盛最多水的容器](#11-盛最多水的容器)
 [16-最接近的三数之和](#16-最接近的三数之和)
 [17-电话号码的字母组合](#17-电话号码的字母组合)
+[18-四数之和](#18-四数之和)
 [2032-至少在两个数组中出现的值](#2032-至少在两个数组中出现的值)
 
 ## details
@@ -146,6 +147,92 @@ function threeSumClosest(nums, target) {
     }
   }
   return queue
+}
+```
+
+### 18-四数之和
+
+难度：中等
+
+[url](https://leetcode.cn/problems/4sum/)
+
+```ts
+// 三数之和的基础上多一次循环
+function fourSum(nums: number[], target: number): number[][] {
+  if (nums.length < 4) {
+    return []
+  }
+  nums.sort((a, b) => a - b)
+
+  function twoSum(
+    nums: number[],
+    target: number,
+    start: number,
+    end: number
+  ): number[][] {
+    const res: number[][] = []
+    let left = start
+    let right = end
+    while (left < right) {
+      const sum = nums[left] + nums[right]
+      if (sum === target) {
+        res.push([nums[left], nums[right]])
+        left++
+        while (nums[left] === nums[left - 1] && left < right) {
+          left++
+        }
+        right--
+        while (nums[right] === nums[right + 1] && left < right) {
+          right--
+        }
+      } else if (sum < target) {
+        left++
+      } else {
+        right--
+      }
+    }
+    return res
+  }
+
+  function threeSum(
+    nums: number[],
+    target: number,
+    start: number,
+    end: number
+  ): number[][] {
+    const res: number[][] = []
+    let i = start
+    while (i <= end - 2) {
+      const r = twoSum(nums, target - nums[i], i + 1, end)
+      if (r.length > 0) {
+        for (let a of r) {
+          res.push([nums[i], ...a])
+        }
+        while (nums[i] === nums[i + 1] && i <= end - 2) {
+          i++
+        }
+      }
+      i++
+    }
+    return res
+  }
+
+  const res: number[][] = []
+  let i = 0
+  while (i < nums.length - 3) {
+    const r = threeSum(nums, target - nums[i], i + 1, nums.length - 1)
+    if (r.length > 0) {
+      for (let a of r) {
+        res.push([nums[i], ...a])
+      }
+      while (nums[i] === nums[i + 1] && i < nums.length - 3) {
+        i++
+      }
+    }
+    i++
+  }
+
+  return res
 }
 ```
 
