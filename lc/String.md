@@ -286,6 +286,56 @@ function longestCommonPrefix(strs: string[]): string {
 };
 ```
 
+### 22-括号生成
+
+难度：中等
+
+[url](https://leetcode.cn/problems/generate-parentheses/)
+
+```ts
+// 思路：n组括号可以看成在()上增加n-1组括号，这n-1组括号分布在()中间，和其右边
+// '(' + p组括号 + ')' + q组括号
+// p + q = n-1
+// p从0增加到n-1，q从n-1减少到0，实现排列组合
+// 举例 n=2 -> ()() (())
+// n=3时
+// p=0 -> ()+()() ()+(())
+// p=1 -> (())+()
+// p=2 -> (()()) ((()))
+// n=3 -> ()()() ()(()) (())() (()()) ((()))
+function generateParenthesis(n: number): string[] {
+  if (n === 1) {
+    return ['()']
+  }
+
+  const res: string[] = []
+  let p1 = 0
+  while (p1 < n) {
+    let p2 = n - 1 - p1
+    const r1 = p1 > 0 ? generateParenthesis(p1) : []
+    const r2 = p2 > 0 ? generateParenthesis(p2) : []
+    if (r1.length === 0) {
+      for (let outer of r2) {
+        res.push(`()${outer}`)
+      }
+    } else if (r2.length === 0) {
+      for (let inner of r1) {
+        res.push(`(${inner})`)
+      }
+    } else {
+      for (let inner of r1) {
+        for (let outer of r2) {
+          res.push(`(${inner})${outer}`)
+        }
+      }
+    }
+    p1++
+  }
+
+  return res
+}
+```
+
 ### 58-最后一个单词的长度
 
 难度：简单
