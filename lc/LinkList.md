@@ -1,5 +1,6 @@
 [19-删除链表倒数第N个节点](#19-删除链表倒数第N个节点)
 [21-合并两个有序链表](#21-合并两个有序链表)
+[24-两两交换链表中的节点](#24-两两交换链表中的节点)
 [剑18-删除链表节点](#剑18-删除链表节点)
 
 ## details
@@ -76,6 +77,50 @@ function mergeTwoLists(list1: ListNode | null, list2: ListNode | null): ListNode
     }
     return temp.next
 };
+```
+
+### 24-两两交换链表中的节点
+
+难度：中等
+
+[url](https://leetcode.cn/problems/swap-nodes-in-pairs/)
+
+```ts
+function swapPairs(head: ListNode | null): ListNode | null {
+  if (head === null || head.next === null) {
+    return head
+  }
+  const dummy = new ListNode(0)
+  dummy.next = head
+  let p1: ListNode | null = dummy
+  let p2: ListNode | null = dummy.next.next
+  while (p2 !== null) {
+    const temp = p1.next as ListNode
+    p1.next = p2
+    temp.next = p2?.next
+    p2.next = temp
+
+    p2 = p1.next
+    if (p2 !== null) {
+      p2 = p2.next
+    }
+  }
+  return dummy.next
+}
+
+// 递归思想
+function swapPairs(head: ListNode | null): ListNode | null {
+  if (head === null || head.next === null) {
+    return head
+  }
+  const rest = head.next.next
+  const next = head.next
+  const dummy = new ListNode(0)
+  dummy.next = next
+  next.next = head
+  head.next = swapPairs(rest)
+  return dummy.next
+}
 ```
 
 ### 剑18-删除链表节点

@@ -2,6 +2,7 @@
 [16-最接近的三数之和](#16-最接近的三数之和)
 [17-电话号码的字母组合](#17-电话号码的字母组合)
 [18-四数之和](#18-四数之和)
+[26-删除有序数组中的重复项](#26-删除有序数组中的重复项)
 [2032-至少在两个数组中出现的值](#2032-至少在两个数组中出现的值)
 
 ## details
@@ -233,6 +234,29 @@ function fourSum(nums: number[], target: number): number[][] {
   }
 
   return res
+}
+```
+
+### 26-删除有序数组中的重复项
+
+难度：简单
+
+[url](https://leetcode.cn/problems/remove-duplicates-from-sorted-array/)
+
+```ts
+// i标识有序无重复数组的最后一项
+// 用j遍历数组，寻找不等于i指向的数值的项，则添加到i+1处
+function removeDuplicates(nums: number[]): number {
+  let i = 0
+  let j = 1
+  while (j < nums.length) {
+    if (nums[i] !== nums[j]) {
+      nums[i + 1] = nums[j]
+      i++
+    }
+    j++
+  }
+  return i + 1
 }
 ```
 
