@@ -1,0 +1,11 @@
+- react
+- react-touter-dom：路由
+- webpack：构建
+- typescript
+- zustand：客户端状态管理
+- @tanstack/react-query：服务端状态管理
+- lodash
+- axios
+- dayjs
+- qs
+- classnames
