@@ -165,48 +165,77 @@ pnpm install webpack webpack-cli webpack-dev-server --save-dev
 const path = require('path')
 const HTMLWebpackPlugin = require('html-webpack-plugin')
 
-module.exports = {
+// 可以通过cross-env配置cdn变量，或者按照webpack的方式，通过--env cdn配置环境变量
+module.exports = (env, argv) => {
   entry: './src/index.tsx',
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
-    clean: true
+    clean: true,
+    publicPath: process.env.CDN ? `cdn地址`: "/",
   },
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
   },
-  mode: process.env.NODE_ENV === 'development' ? 'development' : 'production',
+  mode: argv.mode === 'development' ? 'development' : 'production',
   module: {
     rules: [
-      {
-        test: /\.(ts|tsx)$/,
-        use: 'ts-loader',
-        exclude: /node_modules/,
-      },
-      {
-        test: /\.(js|jsx)$/,
-        use: 'babel-loader',
-        exclude: /node_modules/,
-      },
-      {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
-      },
-      {
-        test: /\.(png|jpg|svg|gif)$/,
-        use: 'file-loader',
-      },
+    {
+      test: /\.(ts|tsx)$/,
+      use: 'ts-loader',
+      exclude: /node_modules/,
+    },
+    {
+      test: /\.(js|jsx)$/,
+      use: 'babel-loader',
+      exclude: /node_modules/,
+    },
+    {
+      test: /\.css$/,
+      use: ['style-loader', 'css-loader'],
+    },
+    {
+      test: /\.less$/,
+      use: [
+        'style-loader', 
+        {
+          loader: 'css-loader', 
+          options: {
+            modules: {
+              localIdentName: "[path][name]-[local]",
+            },
+
+            sourceMap: true,
+
+          }
+        }, 
+        'less-loader'
+        ],
+    },
+    {
+      test: /\.(png|jpg|svg|gif)$/,
+      use: 'file-loader',
+    },
     ],
   },
   plugins: [
     new HTMLWebpackPlugin({
       template: './src/index.html',
     }),
-  ],
+    ],
   devServer: {
     hot: true,
     port: 8080,
     open: true,
+    allowedHosts: ["dev.xxx.com"],
+	proxy: {
+		"/api": {
+			target: "http://xx.xx.com/",
+			changeOrigin: true,
+			toProxy: true,
+			pathRewrite: { "^": "" },
+		},
+	},
   },
 }
 ```

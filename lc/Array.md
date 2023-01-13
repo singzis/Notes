@@ -3,6 +3,7 @@
 [17-电话号码的字母组合](#17-电话号码的字母组合)
 [18-四数之和](#18-四数之和)
 [26-删除有序数组中的重复项](#26-删除有序数组中的重复项)
+[27-移除元素](#27-移除元素)
 [2032-至少在两个数组中出现的值](#2032-至少在两个数组中出现的值)
 
 ## details
@@ -257,6 +258,32 @@ function removeDuplicates(nums: number[]): number {
     j++
   }
   return i + 1
+}
+```
+
+### 27-移除元素
+
+难度：简单
+
+[url](https://leetcode.cn/problems/remove-element/)
+
+```ts
+// 思路同26-删除有序数组中的重复项
+function removeElement(nums: number[], val: number): number {
+  let p1 = 0
+  let p2 = 0
+  while (p2 < nums.length) {
+    if (nums[p2] === val) {
+      p2++
+    } else {
+      const t = nums[p1]
+      nums[p1] = nums[p2]
+      nums[p2] = t
+      p1++
+      p2++
+    }
+  }
+  return p1
 }
 ```
 
