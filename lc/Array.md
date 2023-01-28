@@ -4,6 +4,8 @@
 [18-四数之和](#18-四数之和)
 [26-删除有序数组中的重复项](#26-删除有序数组中的重复项)
 [27-移除元素](#27-移除元素)
+[35-搜索插入位置](#35-搜索插入位置)
+[88-合并两个有序数组](#88-合并两个有序数组)
 [2032-至少在两个数组中出现的值](#2032-至少在两个数组中出现的值)
 
 ## details
@@ -284,6 +286,51 @@ function removeElement(nums: number[], val: number): number {
     }
   }
   return p1
+}
+```
+
+#### 35-搜索插入位置
+
+难度：简单
+
+[url](https://leetcode.cn/problems/search-insert-position/)
+
+```ts
+function searchInsert(nums: number[], target: number): number {
+  let left = 0
+  let right = nums.length - 1
+  while (left <= right) {
+    const mid = (left + right) >>> 1
+    if (nums[mid] === target) {
+      return mid
+    } else if (nums[mid] < target) {
+      left = mid + 1
+    } else {
+      right = mid - 1
+    }
+  }
+  return left
+}
+```
+
+#### 88-合并两个有序数组
+
+难度：简单
+
+[url](https://leetcode.cn/problems/merge-sorted-array/)
+
+```ts
+// 倒着插入，谁大谁先进入末尾
+function merge(nums1: number[], m: number, nums2: number[], n: number): void {
+  while (n > 0) {
+    if (m > 0 && nums1[m - 1] > nums2[n - 1]) {
+      nums1[m + n - 1] = nums1[m - 1]
+      m--
+    } else {
+      nums1[m + n - 1] = nums2[n - 1]
+      n--
+    }
+  }
 }
 ```
 
