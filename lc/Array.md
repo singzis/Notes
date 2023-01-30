@@ -6,6 +6,7 @@
 [27-移除元素](#27-移除元素)
 [35-搜索插入位置](#35-搜索插入位置)
 [39-数组总和](#39-数组总和)
+[40-数组总和2](#40-数组总和2)
 [88-合并两个有序数组](#88-合并两个有序数组)
 [2032-至少在两个数组中出现的值](#2032-至少在两个数组中出现的值)
 
@@ -365,6 +366,117 @@ class Solution:
                         dp[j].append(_m)
 
         return dp[target]
+```
+
+#### 40-数组总和2
+
+难度：中等
+
+[url](https://leetcode.cn/problems/combination-sum-ii/)
+
+```ts
+// 先降序排序，从左往右寻找满足的组合
+// 1. 当前值大于目标值，不满足，需要循环过滤
+// 2. 当前值等于目标值，满足，需要循环寻找
+// 3. 当前值小于目标值，从当前值后面的数组中找寻满足【目标值-当前值】的组合，这里还需要处理之后值与当前值相同的情况，因为当前值已经组合过一次了，后面相同的值就无需再去组合一次，需要过滤
+function quickSort(numbers: number[]) {
+  function partition(numbers: number[], start: number, end: number) {
+    const p = numbers[end]
+    let i = start
+    let j = start
+    while (j < end) {
+      if (numbers[j] > p) {
+        const t = numbers[j]
+        numbers[j] = numbers[i]
+        numbers[i] = t
+        i++
+      }
+      j++
+    }
+    numbers[end] = numbers[i]
+    numbers[i] = p
+    return i
+  }
+  function sort(numbers: number[], start: number, end: number) {
+    if (start >= end) {
+      return
+    }
+    const p = partition(numbers, start, end)
+    sort(numbers, start, p - 1)
+    sort(numbers, p + 1, end)
+  }
+
+  sort(numbers, 0, numbers.length - 1)
+}
+
+function combinationSum2(candidates: number[], target: number): number[][] {
+  quickSort(candidates)
+
+  function f(candidates: number[], target: number, start: number) {
+    if (target === 0) {
+      return []
+    }
+    let result: number[][] = []
+    const end = candidates.length
+    let i = start
+    while (i < end && candidates[i] > target) {
+      i++
+    }
+
+    if (candidates[i] === target) {
+      result.push([candidates[i]])
+      while (i < end && candidates[i] === target) {
+        i++
+      }
+    }
+
+    for (; i < end; i++) {
+      const reset = f(candidates, target - candidates[i], i + 1)
+      result = [
+        ...result,
+        ...reset.reduce(
+          (acc, cur) => [...acc, [candidates[i], ...cur]],
+          result
+        ),
+      ]
+    }
+
+    return result
+  }
+
+  return f(candidates, target, 0)
+}
+```
+
+```ts
+// 升序，递归加剪枝
+function combinationSum2(candidates: number[], target: number): number[][] {
+  const result: number[][] = []
+  const len = candidates.length
+  candidates.sort((a, b) => a - b)
+  function dfs(start, p, target) {
+    if (target === 0) {
+      result.push(p.slice())
+      return
+    }
+    let i = start
+    for (; i < len; i++) {
+      if (candidates[i] > target) {
+        break
+      }
+      if (i > start && candidates[i - 1] === candidates[i]) {
+        continue
+      }
+      p.push(candidates[i])
+      dfs(i + 1, p, target - candidates[i])
+      p.pop()
+    }
+  }
+
+  dfs(0, [], target)
+
+  return result
+}
 ```
 
 #### 88-合并两个有序数组
