@@ -5,6 +5,7 @@
 [26-删除有序数组中的重复项](#26-删除有序数组中的重复项)
 [27-移除元素](#27-移除元素)
 [35-搜索插入位置](#35-搜索插入位置)
+[39-数组总和](#39-数组总和)
 [88-合并两个有序数组](#88-合并两个有序数组)
 [2032-至少在两个数组中出现的值](#2032-至少在两个数组中出现的值)
 
@@ -311,6 +312,59 @@ function searchInsert(nums: number[], target: number): number {
   }
   return left
 }
+```
+
+#### 39-数组总和
+
+难度：中等
+
+[url](https://leetcode.cn/problems/combination-sum/)
+
+```ts
+// 比如 candidates=[2,3,6,7] target=7
+// 可以通过7减去2得到5，来寻找是否存在满足target=5的组合，以此类推
+// 5又剪去2得到3，寻找是否存在满足target=3的组合
+// 通过动态规划来解决
+function combinationSum(candidates: number[], target: number): number[][] {
+  const dp: number[][][] = []
+  for (let k = 0; k < target + 1; k++) {
+    dp[k] = []
+  }
+  candidates.forEach(i => {
+    let j = i
+    for (; j < target + 1; j++) {
+      const t = j - i
+      if (t === 0) {
+        dp[j].push([i])
+      } else if (dp[t]) {
+        dp[t].forEach(d => {
+          dp[j].push([i, ...d])
+        })
+      }
+    }
+  })
+  return dp[target]
+}
+```
+
+```python
+class Solution:
+    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+        dp = [[] for k in range(target+1)]
+        for i in range(len(candidates)):
+            cur = candidates[i]
+
+            for j in range(cur, target+1):
+                t = j - cur
+                if t == 0:
+                    dp[j].append([cur])
+                elif dp[t]:
+                    for m in dp[t]:
+                        _m = m.copy()
+                        _m.append(cur)
+                        dp[j].append(_m)
+
+        return dp[target]
 ```
 
 #### 88-合并两个有序数组
