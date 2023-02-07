@@ -24,14 +24,12 @@ await User.create([
 // 空的 filter 表示匹配所有文档
 const filter = {}
 const all = await User.find(filter)
-复制代码
 ```
 
 同样地，你可以调用 `User.find()` 不带参数，也就是省略 `filter`，您将得到相同的结果。
 
 ```js
 await User.find() // 返回上面带有 _id 属性和 __v 属性的数组
-复制代码
 ```
 
 `Model.find()` 的默认行为是返回模型中的所有文档，因此如果传递的属性都不存在，它将所有文档。
@@ -42,7 +40,6 @@ await User.find() // 返回上面带有 _id 属性和 __v 属性的数组
 // 不要这样做，req.query 可能是空对象
 // 在这种情况下，查询将返回每个文档。
 await Model.find(req.query)
-复制代码
 ```
 
 ### sanitizeFilter 选项
@@ -55,7 +52,6 @@ const user = await User.find({
   email: 'test@163.com',
   hashedPassword: { $ne: null }
 }).setOptions({ sanitizeFilter: true })
-复制代码
 ```
 
 ### cursor (光标)
@@ -75,7 +71,6 @@ const User = mongoose.model(
 const cursor = User.find().cursor()
 
 for (let doc = await cursor.next(); doc != null; doc = await cursor.next()) {}
-复制代码
 ```
 
 或者，您可以使用异步迭代器。
@@ -83,7 +78,6 @@ for (let doc = await cursor.next(); doc != null; doc = await cursor.next()) {}
 ```js
 for await (const doc of User.find()) {
 }
-复制代码
 ```
 
 ## 查询某些字段
@@ -93,7 +87,6 @@ for await (const doc of User.find()) {
 ```js
 //将返回仅包含文档的年龄、名称和id属性的所有文档
 await Model.find({}).select('name age')
-复制代码
 ```
 
 ### `_id` 属性
@@ -104,7 +97,6 @@ await Model.find({}).select('name age')
 await Model.find().select({ name: 1, _id: 0 });
 // or
 await Model.find().select({'name -_id'});
-复制代码
 ```
 
 ## 按 ID 查找
@@ -119,7 +111,6 @@ await Model.create({ _id: 1 })
 
 await Model.findById(1) // { _id: 1 }
 await Model.findById(2) // null，因为找不到任何文档
-复制代码
 ```
 
 当您调用 `findById(_id)` 时，Mongoose 会在后台调用 `findOne({ _id })`。这意味着 `findById()` 触发 `findOne()` [中间件](https://link.juejin.cn?target=https%3A%2F%2Fmongoosejs.com%2Fdocs%2Fmiddleware.html "https://mongoosejs.com/docs/middleware.html")。
@@ -136,7 +127,6 @@ await Model.create({ _id: 1 })
 
 // 打印 findOne()，因为 findById() 调用 findOne()
 await Model.findById(1)
-复制代码
 ```
 
 [Mongoose 会强制转换查询以匹配您的模式](https://link.juejin.cn?target=https%3A%2F%2Fmongoosejs.com%2Fdocs%2Ftutorials%2Fquery_casting.html "https://mongoosejs.com/docs/tutorials/query_casting.html")。这意味着如果您的 `_id` 是一个 [MongoDB ObjectId](https://link.juejin.cn?target=https%3A%2F%2Fdocs.mongodb.com%2Fmanual%2Freference%2Fmethod%2FObjectId%2F "https://docs.mongodb.com/manual/reference/method/ObjectId/")，您可以将 `_id` 作为字符串传递，Mongoose 将为您将其转换为 ObjectId。
@@ -157,7 +147,6 @@ const doc = await Model.findById(_id)
 
 typeof doc._id // 'object'
 doc._id instanceof mongoose.Types.ObjectId // true
-复制代码
 ```
 
 ## 链式
@@ -176,7 +165,6 @@ let docs = await User.find()
 docs = await User.find({
   name: { $in: ['D.O', 'O.K'] }
 })
-复制代码
 ```
 
 可链式操作允许添加到当前查询筛选器。可以使用 [`query.getFilter()` 方法](https://link.juejin.cn?target=https%3A%2F%2Fmongoosejs.com%2Fdocs%2Fapi%2Fquery.html%23query_Query-getFilter "https://mongoosejs.com/docs/api/query.html#query_Query-getFilter")获取查询的当前筛选器。
@@ -186,7 +174,6 @@ const query = User.find().where('name').in(['D.O', 'O.K'])
 
 // { name: { $in: ['D.O', 'O.K'] } }
 query.getFilter()
-复制代码
 ```
 
 以下是几个有用的查询方法列表：
@@ -211,7 +198,6 @@ const docs = await User.find()
   .lte(59)
 
 docs.map((doc) => doc.name) // [ 'D.O', 'O.O', 'O.K' ]
-复制代码
 ```
 
 ## 使用 LIKE 查询
@@ -238,14 +224,12 @@ await User.create([
 const docs = await User.find({ email: /163/ })
 docs.length // 3
 docs.map((doc) => doc.email).sort() // ['yyds@163.com', 'test@163.com', '163@qq.com']
-复制代码
 ```
 
 同样，您可以使用 `$regex` 运算符。
 
 ```js
 const docs = await User.find({ email: { $regex: '163' } })
-复制代码
 ```
 
 需要注意的是 mongoose 不会为您转义 regexp 中的特殊字符。如果要对用户输入的数据使用 `$regexp`，应首先使用 [escape-string-regexp](https://link.juejin.cn?target=https%3A%2F%2Fwww.npmjs.com%2Fpackage%2Fescape-string-regexp "https://www.npmjs.com/package/escape-string-regexp") 或用于转义正则表达式特殊字符的类似库来清理字符串。
@@ -274,7 +258,6 @@ docs[0].email // 'test+foo@163.com'
 
 // Throws: MongoError: Regular expression is invalid: nothing to repeat
 await User.find({ email: { $regex: '+foo' } })
-复制代码
 ```
 
 ## 查询运算符
@@ -301,7 +284,6 @@ await User.create([
   { name: 'O.K', age: 40 },
   { name: 'O.O', age: 22 }
 ])
-复制代码
 ```
 
 假设您要查找所有 `name` 为 O.O 的用户。可以将 `{ age: 'O.O' }` 作为 `filter` 传递。
@@ -311,7 +293,6 @@ const docs = await User.find({ name: 'O.O' })
 
 // MongoDB 可以按任何顺序返回文档，除非您明确排序
 docs.map((doc) => doc.age).sort() // [29, 22]
-复制代码
 ```
 
 你还可以按年龄查询。例如，下面的查询将查找 `age` 为 29 岁的所有字符。
@@ -320,7 +301,6 @@ docs.map((doc) => doc.age).sort() // [29, 22]
 const docs = await User.find({ age: 29 })
 
 docs.map((doc) => doc.name).sort() // ['O.O', 'O.K']
-复制代码
 ```
 
 以上示例不使用任何查询运算符。如果将 `name` 的值设置为具有 [`$eq` 属性](https://link.juejin.cn?target=https%3A%2F%2Fdocs.mongodb.com%2Fmanual%2Freference%2Foperator%2Fquery%2Feq%2F%23op._S_eq "https://docs.mongodb.com/manual/reference/operator/query/eq/#op._S_eq")的对象，则会得到一个等效的查询，但需要使用**查询运算符**。
@@ -329,7 +309,6 @@ docs.map((doc) => doc.name).sort() // ['O.O', 'O.K']
 const docs = await User.find({ name: { $eq: 'O.O' } })
 
 docs.map((doc) => doc.age).sort() // [29, 22]
-复制代码
 ```
 
 ### 比较查询运算符
@@ -340,7 +319,6 @@ docs.map((doc) => doc.age).sort() // [29, 22]
 const docs = await User.find({ age: { $lt: 29 } })
 
 docs.map((doc) => doc.name).sort() // ['K.O', 'O.O']
-复制代码
 ```
 
 假设你想找到所有年龄至少为 29 岁的用户。您可以使用 [`$gte` 查询运算符](https://link.juejin.cn?target=https%3A%2F%2Fdocs.mongodb.com%2Fmanual%2Freference%2Foperator%2Fquery%2Fgte%2F%23op._S_gte "https://docs.mongodb.com/manual/reference/operator/query/gte/#op._S_gte")。
@@ -349,7 +327,6 @@ docs.map((doc) => doc.name).sort() // ['K.O', 'O.O']
 const docs = await User.find({ age: { $gte: 29 } })
 
 docs.map((doc) => doc.name).sort() // ['D.O', 'O.K', 'O.O']
-复制代码
 ```
 
 比较运算符 `$lt`、[`$gt`](https://link.juejin.cn?target=https%3A%2F%2Fdocs.mongodb.com%2Fmanual%2Freference%2Foperator%2Fquery%2Fgt%2F%23op._S_gt "https://docs.mongodb.com/manual/reference/operator/query/gt/#op._S_gt")、[`$lte`](https://link.juejin.cn?target=https%3A%2F%2Fdocs.mongodb.com%2Fmanual%2Freference%2Foperator%2Fquery%2Flte%2F%23op._S_lte "https://docs.mongodb.com/manual/reference/operator/query/lte/#op._S_lte") 和 `$gte` 不仅可以处理数字。您还可以在字符串、日期和其他类型上使用它们。MongoDB 使用 [unicode](https://link.juejin.cn?target=https%3A%2F%2Fwww.w3.org%2FTR%2Fxml-entity-names%2Fbycodes.html "https://www.w3.org/TR/xml-entity-names/bycodes.html") 顺序比较字符串。如果该顺序不适用于您，您可以使用 [MongoDB collations](https://link.juejin.cn?target=https%3A%2F%2Fthecodebarbarian.com%2Fa-nodejs-perspective-on-mongodb-34-collations "https://thecodebarbarian.com/a-nodejs-perspective-on-mongodb-34-collations") 对其进行配置。
@@ -358,7 +335,6 @@ docs.map((doc) => doc.name).sort() // ['D.O', 'O.K', 'O.O']
 const docs = await User.find({ name: { $lte: 'K.O' } })
 
 docs.map((doc) => doc.name).sort() // [ 'D.O', 'K.O' ]
-复制代码
 ```
 
 ### 正则表达式
@@ -369,7 +345,6 @@ docs.map((doc) => doc.name).sort() // [ 'D.O', 'K.O' ]
 const docs = await User.find({ name: /K/ })
 
 docs.map((doc) => doc.name).sort() // ['K.O', 'O.K']
-复制代码
 ```
 
 同样，您可以使用 [`$regex` 查询运算符](https://link.juejin.cn?target=https%3A%2F%2Fdocs.mongodb.com%2Fmanual%2Freference%2Foperator%2Fquery%2Fregex%2F%23op._S_regex "https://docs.mongodb.com/manual/reference/operator/query/regex/#op._S_regex")。这使您能够将正则表达式作为字符串传递，如果您是从 HTTP 请求中获取查询，这很方便。
@@ -378,7 +353,6 @@ docs.map((doc) => doc.name).sort() // ['K.O', 'O.K']
 const docs = await User.find({ name: { $regex: 'K' } })
 
 docs.map((doc) => doc.name).sort() // ['K.O', 'O.K']
-复制代码
 ```
 
 ### 包含 `$and` 和 `$or` 的组合
@@ -392,7 +366,6 @@ const docs = await User.find({
 })
 
 docs.map((doc) => doc.name) // ['O.O']
-复制代码
 ```
 
 假设您要查找 `age` 至少为 29 岁或 `name` 等于 `O.O` 的用户 。您需要 [`$or` 查询运算符](https://link.juejin.cn?target=https%3A%2F%2Fdocs.mongodb.com%2Fmanual%2Freference%2Foperator%2Fquery%2For%2F%23op._S_or "https://docs.mongodb.com/manual/reference/operator/query/or/#op._S_or")。
@@ -403,7 +376,6 @@ const docs = await User.find({
 })
 
 docs.map((doc) => doc.name).sort() // [ 'D.O', 'O.O', 'O.K', 'O.O' ]
-复制代码
 ```
 
 还有一个 [`$and` 查询运算符](https://link.juejin.cn?target=https%3A%2F%2Fdocs.mongodb.com%2Fmanual%2Freference%2Foperator%2Fquery%2Fand%2F%23op._S_and "https://docs.mongodb.com/manual/reference/operator/query/and/#op._S_and")。您很少需要使用 `$and` 查询运算符。`$and` 的主要用例是组合多个 `$or` 运算符。例如，假设您要查找满足以下两个条件的字符：
@@ -424,4 +396,21 @@ const docs = await User.find({
 })
 
 docs.map((doc) => doc.name).sort() // [ 'D.O', 'O.O', 'O.K' ]
+```
+
+## 更新
+
+需要先查询，然后进行更新
+
+```js
+const r = await User.where({'id': '1111'}).update({name: 'Jack'})
+```
+
+## 删除
+
+无需优先查询，直接将匹配上字段的项目删除，返回字段中deletedCount为1表示没有发生错误
+
+```js
+const r = await User.deleteOne({ name })
+res.send(r.deletedCount ? `成功删除${name}` : `删除失败`)
 ```
