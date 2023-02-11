@@ -1,4 +1,5 @@
-
+[3-无重复字符的最长子串](#3-无重复字符的最长子串)
+[5-最长回文子串](#5-最长回文子串)
 [6-z字形变换](#6-z字形变换)
 [7-整数反转](# 7-整数反转)
 [8-字符串转换整数](#8-字符串转换整数)
@@ -7,11 +8,80 @@
 [13-罗马数字转整数](#13-罗马数字转整数)
 [14-最长公共前缀](#14-最长公共前缀)
 [22-括号生成](#22-括号生成)
+[28-找出字符串中第一个匹配项的下标](#28-找出字符串中第一个匹配项的下标)
 [58-最后一个单词的长度](#58-最后一个单词的长度)
 [1750-删除字符串两端相同字符后的最短长度](#1750-删除字符串两端相同字符后的最短长度)
 [2027-转换字符串的最少操作次数](#2027-转换字符串的最少操作次数)
 
 ## details
+
+### 3-无重复字符的最长子串
+
+难度：中
+
+[url](https://leetcode.cn/problems/longest-substring-without-repeating-characters/submissions/)
+
+```js
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var lengthOfLongestSubstring = function(s) {
+  if (s.length === 0) return 0
+  let maxLen = 1
+  let cur = s[0]
+  for (let i = 1; i < s.length; i++) {
+    const idx = cur.indexOf(s[i])
+    if (idx > -1) {
+      cur = cur.slice(idx + 1)
+    }
+    cur = cur + s[i]
+    maxLen = Math.max(maxLen, cur.length)
+  }
+  return maxLen
+};
+```
+
+### 5-最长回文子串
+
+难度：中等
+
+[url](https://leetcode.cn/problems/longest-palindromic-substring/)
+
+```js
+// 从当前字符往两边判断是否是回文，其中处理细节有 1.当前字符如果和之后挨着的字符相等的话，则已这些字符作为回文中心字符，无论奇偶都是满足回文条件的 2.下次可以以找到的右边最远的那个相同字符的下标作为起始开始循环，因为中间都是相同字符，计算出来的回文长度肯定不如第一次算出来的长
+// 比如 baaaaab，第一次a计算完后，可以不用再算后面的a了，直接从最后一个b开始
+/**
+ * @param {string} s
+ * @return {string}
+ */
+var longestPalindrome = function (s) {
+  if (s.length <= 1) return s
+  let maxStr = 0
+  let maxLen = 0
+  for (let i = 0; i < s.length; i++) {
+    let curLen = 1
+    let left = i - 1
+    let right = i + 1
+    while (right < s.length && s[i] === s[right]) {
+      curLen++
+      right++
+    }
+    i=right-1
+    while (s[left] === s[right] && left >= 0 && right < s.length) {
+      curLen += 2
+      left--
+      right++
+    }
+    curLen = right - left + 1
+    if (curLen > maxLen) {
+      maxStr = s.slice(left+1, right)
+      maxLen = curLen
+    }
+  }
+  return maxStr
+}
+```
 
 ### 6-z字形变换
 
@@ -335,6 +405,60 @@ function generateParenthesis(n: number): string[] {
 
   return res
 }
+```
+
+### 28-找出字符串中第一个匹配项的下标
+
+难度：中
+
+[url](https://leetcode.cn/problems/find-the-index-of-the-first-occurrence-in-a-string/)
+
+```js
+// KMP算法，算好next即可
+/**
+ * @param {string} haystack
+ * @param {string} needle
+ * @return {number}
+ */
+var strStr = function(haystack, needle) {
+  function buildNext(pat) {
+    const len = pat.length
+    const next = new Array(len).fill(0)
+    let i = 1
+    let now = 0
+    while(i<len) {
+      if(pat[i] === pat[now]) {
+        now++
+        next[i] = now
+        i++
+      } else if(now){
+        now = next[now-1]
+      } else {
+        i++
+      }
+    }
+    return next
+  }
+  const next = buildNext(needle)
+  let i = 0
+  let j = 0
+  while(i < haystack.length) {
+    if(haystack[i] === needle[j]) {
+      i++
+      j++
+    } else if (j) {
+      j = next[j-1]
+    } else {
+      i++
+    }
+
+    if(j === needle.length) {
+      return i - j
+    }
+  }
+
+  return -1
+};
 ```
 
 ### 58-最后一个单词的长度

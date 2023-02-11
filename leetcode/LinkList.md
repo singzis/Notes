@@ -1,9 +1,60 @@
+[2-两数相加](#2-两数相加)
 [19-删除链表倒数第N个节点](#19-删除链表倒数第N个节点)
 [21-合并两个有序链表](#21-合并两个有序链表)
 [24-两两交换链表中的节点](#24-两两交换链表中的节点)
 [剑18-删除链表节点](#剑18-删除链表节点)
 
 ## details
+
+### 2-两数相加
+
+难度：中
+
+[url](https://leetcode.cn/problems/add-two-numbers/)
+
+```js
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} l1
+ * @param {ListNode} l2
+ * @return {ListNode}
+ */
+var addTwoNumbers = function(l1, l2) {
+  let p1 = l1
+  let p2 = l2
+  let c = 0
+  const result = new ListNode(0)
+  let r = result
+  while (p1 || p2) {
+    let pv1 = 0
+    let pv2 = 0
+    if (p1) {
+      pv1 = p1.val
+      p1 = p1.next
+    }
+    if (p2) {
+      pv2 = p2.val
+      p2 = p2.next
+    }
+
+    let sum = pv1 + pv2 + c
+    c = sum > 9 ? 1 : 0
+    sum = sum % 10
+    r.next = new ListNode(sum)
+    r = r.next
+  }
+  if (c > 0) {
+    r.next = new ListNode(c)
+  }
+  return result.next
+};
+```
 
 ### 19-删除链表倒数第N个节点
 
