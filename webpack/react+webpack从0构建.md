@@ -15,7 +15,7 @@ pnpm install react react-dom
 3.使用typescript编写项目，就需要安装对应的依赖，而且还需要为react和react-dom安装声明文件依赖
 
 ```shell
-pnpm install "typescript" @types/react @types/react-dom --save-dev
+pnpm install typescript @types/react @types/react-dom --save-dev
 ```
 
 然后还需要在根目录下创建tsconfig.json文件配置，不推荐使用`tsc --init`，配置不够全
