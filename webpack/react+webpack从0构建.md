@@ -191,11 +191,7 @@ module.exports = (env, argv) => {
       exclude: /node_modules/,
     },
     {
-      test: /\.css$/,
-      use: ['style-loader', 'css-loader'],
-    },
-    {
-      test: /\.less$/,
+      test: /\.(le|c)ss$/,
       use: [
         'style-loader', 
         {
@@ -249,18 +245,42 @@ pnpm install ts-loader babel-loader style-loader css-loader --save-dev
 -   ts-loader：用于加载并转换 TypeScript 代码。
 -   babel-loader：用于加载并转换 JavaScript 代码，使用 Babel 进行转换。
 -   css-loader：用于加载和解析 CSS 文件，并将其转换为 JavaScript 模块。
--   style-loader：用于在浏览器中加载并应用 CSS 样式。
+-   style-loader：用于在浏览器中加载并应用 CSS 样式，以多个`<style>`的形式将css插入到DOM中，运行很快，在开发模式中有优势，但生产环境还是适合使用`mini-css-extract-plugin`+`css-loader`一起使用。
 -   ~~file-loader：用于加载并处理文件，例如图片、字体~~
 -   webpack5通过`asset`模块来处理资源模块，包括之前`file-loader、url-loader、raw-loader`处理的资源，现全通过`asset`处理，且内置，无需安装多余的loader，具体用法按照官方文档
 
 针对打包后的内容，需要安装一个插件
 
 ```shell
-pnpm install html-webpack-plugin --save-dev
+pnpm install html-webpack-plugin  mini-css-extract-plugin --save-dev
 ```
 
 -   html-webpack-plugin：用于自动生成 HTML 文件，并将打包后的 JS 和 CSS 自动插入该 HTML 文件中。这样可以节省手动创建 HTML 文件并添加脚本和样式的步骤。
 -   ~~clean-webpack-plugin：用于清理构建目录中的旧文件。例如，在每次构建之前，可以使用此插件清理旧文件，以确保只保留最新的构建。这样可以避免旧文件留在构建目录中，从而避免混淆~~clean-webpack-plugin的功能可以通过`output.clean:true`替代，前提是webpack的版本高于5.20
+- mini-css-extract-plugin：将css单独提取出来，支持css和sourceMap的按需加载，异步加载
+
+所以对loader进行更改：
+
+```js
+ {
+      test: /\.(le|c)ss$/,
+      use: [
+        isProd ? MiniCssExtractPlugin.loader : 'style-loader',
+        {
+          loader: 'css-loader', 
+          options: {
+            modules: {
+              localIdentName: "[path][name]-[local]",
+            },
+
+            sourceMap: true,
+
+          }
+        }, 
+        'less-loader'
+        ],
+},
+```
 
 7.在package.json增加相关命令启动和打包项目
 
