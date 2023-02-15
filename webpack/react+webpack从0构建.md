@@ -214,7 +214,7 @@ module.exports = (env, argv) => {
     },
     {
       test: /\.(png|jpg|svg|gif)$/,
-      use: 'file-loader',
+      type: 'asset' // 通用写法
     },
     ],
   },
@@ -243,14 +243,15 @@ module.exports = (env, argv) => {
 为了能使webpack对指定文件作出正确的编译，需要安装对应的loader解析
 
 ```shell
-pnpm install ts-loader babel-loader style-loader css-loader file-loader --save-dev
+pnpm install ts-loader babel-loader style-loader css-loader --save-dev
 ```
 
 -   ts-loader：用于加载并转换 TypeScript 代码。
 -   babel-loader：用于加载并转换 JavaScript 代码，使用 Babel 进行转换。
 -   css-loader：用于加载和解析 CSS 文件，并将其转换为 JavaScript 模块。
 -   style-loader：用于在浏览器中加载并应用 CSS 样式。
--   file-loader：用于加载并处理文件，例如图片、字体等
+-   ~~file-loader：用于加载并处理文件，例如图片、字体~~
+-   webpack5通过`asset`模块来处理资源模块，包括之前`file-loader、url-loader、raw-loader`处理的资源，现全通过`asset`处理，且内置，无需安装多余的loader，具体用法按照官方文档
 
 针对打包后的内容，需要安装一个插件
 
