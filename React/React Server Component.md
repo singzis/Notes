@@ -1,5 +1,3 @@
-# React Server Component
-
 ## 简介
 
 React Server Component（RSC），由react团队2020年12月22日提出的一个方案，把组件放到服务端，据说为了解决开发中的一些痛点，在体验、维护性和性能之间找到一个平衡点
