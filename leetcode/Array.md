@@ -4,6 +4,7 @@
 [18-四数之和](#18-四数之和)
 [26-删除有序数组中的重复项](#26-删除有序数组中的重复项)
 [27-移除元素](#27-移除元素)
+[31-下一个排列](#31-下一个排列)
 [35-搜索插入位置](#35-搜索插入位置)
 [39-数组总和](#39-数组总和)
 [40-数组总和2](#40-数组总和2)
@@ -288,6 +289,48 @@ function removeElement(nums: number[], val: number): number {
     }
   }
   return p1
+}
+```
+
+#### 31-下一个排列
+
+```ts
+// 标准的 “下一个排列” 算法可以描述为：
+// 从后向前 查找第一个 相邻升序 的元素对 (i,j)，满足 A[i] < A[j]。此时 [j,end) 必然是降序
+// 在 [j,end) 从后向前 查找第一个满足 A[i] < A[k] 的 k。A[i]、A[k] 分别就是上文所说的「小数」、「大数」
+// 将 A[i] 与 A[k] 交换
+// 可以断定这时 [j,end) 必然是降序，逆置 [j,end)，使其升序
+// 如果在步骤 1 找不到符合的相邻元素对，说明当前 [begin,end) 为一个降序顺序，则直接跳到步骤 4
+function fn11(nums) {
+  if (nums.length < 2) {
+    return
+  }
+  let i = nums.length - 2
+  let j = nums.length - 1
+  let k = nums.length - 1
+
+  while (i >= 0 && nums[i] >= nums[j]) {
+    i--
+    j--
+  }
+
+  if (i >= 0) {
+    while (k >= j && nums[k] <= nums[i]) {
+      k--
+    }
+    const t = nums[i]
+    nums[i] = nums[k]
+    nums[k] = t
+  }
+  i = j
+  j = nums.length - 1
+  while (i < j) {
+    const t = nums[i]
+    nums[i] = nums[j]
+    nums[j] = t
+    j--
+    i++
+  }
 }
 ```
 
