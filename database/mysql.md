@@ -6,3 +6,5 @@
 brew services restart mysql
 mysql -u root
 ```
+
+启动mongodb就是`start mongodb-community`
