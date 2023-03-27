@@ -73,6 +73,19 @@ class APromise {
     return this.then(null,  onRejected)
   }
 
+  finally = onFinally => {
+    return this.then(
+      value => {
+        return APromise.resolve(onFinally()).then(() => value)
+      },
+      reason => {
+        return APromise.resolve(onFinally()).then(() => {
+          throw reason
+        })
+      }
+    )
+  }
+
   static resolve = value => {
     return new APromise(resolve => {
       resolve(value)
