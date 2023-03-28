@@ -86,17 +86,9 @@ class APromise {
     )
   }
 
-  static resolve = value => {
-    return new APromise(resolve => {
-      resolve(value)
-    })
-  }
+  static resolve = value => new APromise(resolve => resolve(value))
 
-  static reject = reason => {
-    return new APromise((resolve, reject) => {
-      reject(reason)
-    })
-  }
+  static reject = reason => new APromise((resolve, reject) => reject(reason))
 
   static all = promises => {
     return new APromise((resolve, reject) => {
@@ -141,39 +133,26 @@ class APromise {
   static race = promises => {
     return new APromise((resolve, reject) => {
       promises.forEach(promise => {
-        promise.then(
-          value => {
-            resolve(value)
-          },
-          reason => {
-            reject(reason)
-          }
-        )
+        promise.then(resolve, reject)
       })
     })
   }
 
   static allSettled = promises => {
-    const result = new Array(promises.length)
-    let count = 0
-    return new APromise((resolve, reject) => {
-      promises.forEach((promise, idx) => {
+    return new APromise(resolve => {
+      const result = new Array(promises.length)
+      let count = 0
+      promises.forEach((promise, index) => {
         promise.then(
           value => {
-            result[idx] = {
-              status: FULFILLED,
-              value: value,
-            }
+            result[index] = { status: FULFILLED, value }
             count++
             if (count === promises.length) {
               resolve(result)
             }
           },
           reason => {
-            result[idx] = {
-              status: REJECTED,
-              value: reason,
-            }
+            result[index] = { status: REJECTED, reason }
             count++
             if (count === promises.length) {
               resolve(result)
