@@ -127,7 +127,7 @@ nginx -T         # 查看当前 Nginx 最终的配置
 nginx -t -c <配置路径>    # 检查配置是否有问题，如果已经在配置目录，则不需要-c
 ```
 
-这里对 nginx 做默认的配置，把首页重定向到我们即将在 nextjs 里设置的地址`http://localhost:3000`。
+这里对 nginx 做默认的配置，把首页重定向到我们即将在 nextjs 里设置的地址`http://localhost:3000`
 
 进入文件：
 
