@@ -1,68 +1,78 @@
-手写一个Promise/A+，整体还是能更完整的认识Promise的
+# 手撕 Promise/A+
+
+手写一个不完全的 Promise/A+，整体还是能更完整的认识 Promise 的
+
 ```js
-const PENDING = 'pending'
-const FULFILLED = 'fulfilled'
-const REJECTED = 'rejected'
+const Pending = 'pending'
+const Fulfilled = 'fulfilled'
+const Rejected = 'rejected'
 
 class APromise {
   constructor(executor) {
-    this.state = PENDING
-    this.value = ''
-    this.handlers = []
-    executor(this.fulfill, this.reject)
-  }
+    this.state = Pending
+    this.value = null
+    this.handlesQueue = []
 
-  fulfill = value => {
-    if (this.state === PENDING) {
-      this.state = FULFILLED
-      this.value = value
-      this.handlers.forEach(this.handle)
-      this.handlers = []
+    const fulfill = value => {
+      if (this.state === Pending) {
+        this.state = Fulfilled
+        this.value = value
+        this.handlesQueue.forEach(this.handle)
+        this.handlesQueue = []
+      }
+    }
+
+    const reject = reason => {
+      if (this.state === Pending) {
+        this.state = Rejected
+        this.value = reason
+        this.handlesQueue.forEach(this.handle)
+        this.handlesQueue = []
+      }
+    }
+
+    try {
+      executor(fulfill, reject)
+    } catch (e) {
+      reject(e)
     }
   }
 
-  reject = reason => {
-    if (this.state === PENDING) {
-      this.value = reason
-      this.state = REJECTED
-      this.handlers.forEach(this.handle)
-      this.handlers = []
+  handle = cb => {
+    if (this.state === Pending) {
+      this.handlesQueue.push(cb)
+    } else if (this.state === Fulfilled && cb.onFullField) {
+      cb.onFullField(this.value)
+    } else if (this.state === Rejected && cb.onRejected) {
+      cb.onRejected(this.value)
     }
   }
 
-  handle = handle => {
-    if (this.state === PENDING) {
-      this.handlers.push(handle)
-    } else if (this.state === FULFILLED && handle.onFulfilled) {
-      handle.onFulfilled(this.value)
-    } else if (this.state === REJECTED && handle.onRejected) {
-      handle.OnRejected(this.value)
-    }
-  }
-
-  then = (onFulfilled, onRejected) => {
+  then = (onFullField, onRejected) => {
     return new APromise((resolve, reject) => {
       this.handle({
-        onFulfilled: value => {
-          if (typeof onFulfilled === 'function') {
-            try {
-              resolve(onFulfilled(value))
-            } catch (e) {
-              reject(e)
+        onFullField: val => {
+          try {
+            if (typeof onFullField === 'function') {
+              // 这里是关键，如果onFullField返回的是一个Promise，那么就会等待这个Promise的状态变化，目前该函数不具备处理返回Promise的能力
+              resolve(onFullField(val))
+            } else {
+              resolve(val)
             }
-          } else {
-            resolve(value)
+          } catch (e) {
+            reject(e)
           }
         },
-        onRejected: reason => {
-          if (typeof onRejected === 'function') {
-            try {
-              resolve(onRejected(reason))
-            } catch (e) {
-              reject(e)
+        onRejected: val => {
+          try {
+            if (typeof onRejected === 'function') {
+              // 这里是关键，如果onRejected返回的是一个Promise，那么就会等待这个Promise的状态变化，目前该函数不具备处理返回Promise的能力
+              resolve(onRejected(val))
+            } else {
+              reject(val)
             }
-          } else {
-            reject(value)
+          } catch (e) {
+            reject(e)
           }
         },
       })
@@ -70,95 +80,95 @@ class APromise {
   }
 
   catch = onRejected => {
-    return this.then(null,  onRejected)
+    return this.then(null, onRejected)
   }
 
   finally = onFinally => {
     return this.then(
-      value => {
-        return APromise.resolve(onFinally()).then(() => value)
+      val => {
+        onFinally()
+        return val
       },
       reason => {
-        return APromise.resolve(onFinally()).then(() => {
-          throw reason
-        })
+        onFinally()
+        return reason
       }
     )
   }
 
-  static resolve = value => new APromise(resolve => resolve(value))
+  static resolve = val => new Promise(resolve => resolve(val))
 
-  static reject = reason => new APromise((resolve, reject) => reject(reason))
+  static reject = reason => new Promise((_, reject) => reject(reason))
 
   static all = promises => {
     return new APromise((resolve, reject) => {
       const result = new Array(promises.length)
       let count = 0
-      promises.forEach((promise, index) => {
-        promise.then(
-          value => {
-            result[index] = value
-            count++
-            if (count === promise.length) {
-              resolve(result)
-            }
-          },
-          reason => {
-            reject(reason)
-          }
-        )
-      })
-    })
-  }
-
-  static any = promises => {
-    return new APromise((resolve, reject) => {
-      let count = 0
-      promises.forEach(promise => {
-        promise.then(
-          value => {
-            resolve(value)
-          },
-          reason => {
-            count++
-            if (count === promises.length) {
+      promises.forEach((promise, idx) => {
+        promise
+          .then(
+            val => {
+              count++
+              result[idx] = val
+              if (count === promises.length) {
+                resolve(result)
+              }
+            },
+            reason => {
               reject(reason)
             }
-          }
-        )
-      })
-    }) 
-  }
-
-  static race = promises => {
-    return new APromise((resolve, reject) => {
-      promises.forEach(promise => {
-        promise.then(resolve, reject)
+          )
+          .catch(reject)
       })
     })
   }
 
   static allSettled = promises => {
-    return new APromise(resolve => {
+    return new APromise((resolve, reject) => {
       const result = new Array(promises.length)
       let count = 0
-      promises.forEach((promise, index) => {
-        promise.then(
-          value => {
-            result[index] = { status: FULFILLED, value }
-            count++
-            if (count === promises.length) {
-              resolve(result)
+      promises.forEach((promise, idx) => {
+        promise
+          .then(
+            val => {
+              count++
+              result[idx] = {
+                state: Fulfilled,
+                value: val,
+              }
+              if (count === promises.length) {
+                resolve(result)
+              }
+            },
+            reason => {
+              count++
+              result[idx] = {
+                state: Rejected,
+                value: reason,
+              }
+              if (count === promises.length) {
+                resolve(result)
+              }
             }
-          },
-          reason => {
-            result[index] = { status: REJECTED, reason }
-            count++
-            if (count === promises.length) {
-              resolve(result)
+          )
+          .catch(reject)
+      })
+    })
+  }
+
+  static race = promises => {
+    return new APromise((resolve, reject) => {
+      promises.forEach(promise => {
+        promise
+          .then(
+            val => {
+              resolve(val)
+            },
+            reason => {
+              reject(reason)
             }
-          }
-        )
+          )
+          .catch(reject)
       })
     })
   }
