@@ -1,3 +1,5 @@
+# 拦截XHR请求方式
+
 ```js
 // 保存原始XMLHttpRequest对象
 var realXHR = window.XMLHttpRequest;
