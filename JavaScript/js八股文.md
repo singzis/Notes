@@ -1,6 +1,6 @@
 # JavaScript
 
-- js数据类型，如何存储
+- js 数据类型，如何存储
 
 ```text
 JavaScript 一共有 8 种数据类型，其中有 7 种基本数据类型：Undefined、Null、Boolean、Number、String、Symbol（es6 新增，表示独一无二的值）和 BigInt（es10 新增）；
@@ -81,7 +81,7 @@ JavaScript 对象是通过引用来传递的，我们创建的每个新对象实
 ​
 - 防抖节流函数
 - 定时器回调
-- 
+-
 ​
 优点
 内部变量是私有的，可以做到隔离作用域，保持数据的不被污染性
@@ -207,7 +207,7 @@ v8 的垃圾回收机制基于分代回收机制，这个机制又基于世代�
 4. 闭包
 ```
 
-- ES6有哪些新特性？
+- ES6 有哪些新特性？
 
 ```text
 1. 块级作用域与常量（let和const）：引入了块级作用域，使用`let`关键字声明变量，以及使用`const`关键字声明常量，使得变量和常量的作用域更加清晰可控。
@@ -268,10 +268,24 @@ v8 的垃圾回收机制基于分代回收机制，这个机制又基于世代�
 
 在使用历史路由时，当用户点击链接或触发前端路由时，会调用`pushState()`或`replaceState()`方法，将新的URL地址加入到浏览器的历史记录中。这种方式的好处是可以使URL更加优雅，同时在进行前进或后退操作时，页面不会重新加载，而是通过浏览器的历史记录和缓存来快速渲染。
 
+H5 History API:
+
+- history.back()
+- history.go()
+- history.forward()
+- history.pushState()
+- history.replaceState()
+
+同时在 History API 中还有一个事件，该事件为 popstate；它有着以下特点：History.back()、History.forward()、History.go()在被调用时，会触发 popstate事件，但是History.pushState()和History.replaceState()不会触发popstate事件。
+
+所以我们需要对 replaceState 和 pushState，去创建新的全局Event事件。然后 window.addEventListener 监听我们加的 Event 即可
+
 2. 哈希路由（Hash）
 哈希路由是通过改变URL中的哈希值实现的。哈希值（#）后面的部分不会被发送到服务器，所以当改变哈希值时，页面不会重新加载，但浏览器的历史记录也不会被修改。
 
 在使用哈希路由时，当用户点击链接或触发前端路由时，会改变URL中的哈希值。这种方式的好处是可以在不刷新页面的情况下更新页面内容，同时保留浏览器的历史记录，使得前进或后退操作能够正常工作。
+
+可以通过hashChange来监听hash路由变化，但是 hash 变化除了触发 hashChange ,也会触发 popstate 事件,而且会先触发 popstate 事件，我们可以统一监听 popstate
 
 历史路由和哈希路由的区别如下：
 - 历史路由使用`pushState()`和`replaceState()`方法，可以动态改变URL，但不会引起页面的重新加载；哈希路由改变的是URL中的哈希值，也不会引起页面的重新加载，但不会改变浏览器的历史记录。
@@ -279,4 +293,13 @@ v8 的垃圾回收机制基于分代回收机制，这个机制又基于世代�
 - 历史路由需要后端支持，因为浏览器地址栏中的URL改变会导致浏览器向服务器发送请求；哈希路由不需要后端支持，因为哈希值的变化不会被发送到服务器。
 
 综上所述，历史路由和哈希路由都有各自的优缺点，选择使用哪种方式应该根据具体的应用场景和需求进行选择。
+```
+
+- property 和 attribute 的区别是什么
+
+```text
+- `property`是`DOM`中的属性，是`JavaScript`里的对象;
+- `attribute`是`HTML`标签上的特性，它的值只能够是字符串;
+​
+简单的理解就是：`Attribute`就是`DOM`节点自带的属性，例如`html`中常用的`id`、`class`、`title`、`align`等；而`Property`是这个`DOM`元素作为对象，其附加的内容，例如`childNodes`、`firstChild`等。
 ```
