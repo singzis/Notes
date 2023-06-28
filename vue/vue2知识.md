@@ -2,6 +2,13 @@
 
 整理一下 vue2 会用到的相关知识
 
+## computed 与 watch 的区别
+
+1. computed 支持缓存，依赖的数据发生变化才会重新加算；watch 不支持缓存，依赖的数据发生变化就会执行相关操作
+2. computed 不支持异步，如果在其中有异步操作，是无法监听数据变化；watch 支持异步
+3. computed 计算结果做为属性值，没个属性都可以设置 set 和 get；watch 是监听已经在 data 中声明过的属性或者 props 中的数据
+4. computed 用于多个属性/数据影响一个属性/数据时；watch 用于一个属性/数据影响多个属性/数据时
+
 ## mapState
 
 mapState 函数的可以接受一个对象 Object<string | function>。对象中可以包含字符串或函数。mapState 函数的返回结果是一个对象
