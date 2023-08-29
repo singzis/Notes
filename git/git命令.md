@@ -80,6 +80,35 @@
 
 [参考](https://blog.csdn.net/QH_JAVA/article/details/77979622)
 
+### 暂存
+
+使用 stash 暂存代码，可以不用 commit 即可切换分支
+
+```shell
+# 保存当前未commit的代码   
+git stash   
+  
+# 保存当前未commit的代码并添加备注   
+git stash save "备注的内容"   
+
+# 列出stash的所有记录   
+git stash list   
+  
+# 删除stash的所有记录   
+git stash clear   
+  
+# 应用最近一次的stash   
+git stash apply   
+  
+# 应用最近一次的stash，随后删除该记录   
+git stash pop   
+  
+# 删除最近的一次stash   
+git stash drop
+```
+
+针对多条stash，先 `git stash list` 获取所有记录，再应用指定记录`git stash apply stash@{1}`
+
 ### 标签（tag）
 
 创建标签

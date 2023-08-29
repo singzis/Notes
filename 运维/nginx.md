@@ -67,3 +67,6 @@ nginx.conf 文件的优先级最高，它包含了所有 Nginx 的全局配置�
 如果你的 conf.d 目录中有多个 \*.conf 文件，那么它们的加载顺序将按照字母顺序进行。例如，conf.d/00-default.conf 将先于 conf.d/10-custom.conf 加载。
 
 总之，Nginx 配置文件的优先级是从高到低依次为 nginx.conf 文件、include 指令中包含的配置文件，以及 conf.d 目录下的 \*.conf 文件，其中后面的配置文件会覆盖前面的配置文件
+
+
+https://www.zhihu.com/question/21483073/answer/2252761291
